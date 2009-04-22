@@ -205,8 +205,10 @@ class drcom_client():
 	def init_conf(self):
 		self.BUFFER=1024
 		self.server_brand='Drco'
-		self.server_ip='202.1.1.1'
-		self.server_port=61440
+#!#		self.server_ip='202.1.1.1'
+		self.server_ip='localhost'
+#!#		self.server_port=61440
+		self.server_port=8080
 		self.ifname=self.get_ifname()
 		self.md5_tail='\x14\x00\x07\x0b'
 		self.host_ip=self.get_ip_addr()
@@ -243,6 +245,9 @@ class drcom_client():
 
 		self.local_addr = []
 		self.local_mask = []
+
+		self.timer_38 = 20
+		self.timer_40 = 16
 
 		self.exception_id={
 			'00':_("Unknown errors"),
@@ -308,9 +313,16 @@ class drcom_client():
 						self.packet_process(recv_data)
 
 				## Timer Signal
+				# FIXME: if _timer_XX is behind _serv_ack_[logout] in dataQueue
 				elif data == '_timer_38_':
+					## for test
+					print '_timer_38_'
+					#
 					self.alive_38_request()
 				elif data == '_timer_40_':
+					## for test
+					print '_timer_40_'
+					#
 					self.alive_40_request()
 				else:
 					pass
@@ -323,12 +335,16 @@ class drcom_client():
 			except:
 				pass
 			else:
+				# FIXME: aweful way to be removed
 				self.serv_addr=recv_addr
+				self.recv_addr=recv_addr
 				dataQueue.put('_serv_ack_')
 				dataQueue.put(recv_data)
 
-	def set_timer(self):
-		while self.run_thread_timer:
+#	def set_timer(self):
+	def set_38_timer(self):
+#		while self.run_thread_timer:
+		while self.run_38_timer:
 			# FIXME: 'self.i' may overflow ?
 			try:
 				self.i += 1
@@ -338,47 +354,68 @@ class drcom_client():
 			# it could start timer in 0 second :)
 			if self.i/self.timer_38*self.timer_38 == self.i:
 				dataQueue.put('_timer_38_')
-			if self.i/self.timer_40*self.timer_40 == self.i:
+			# FIXME: no preparation for starting 2nd timer
+#			if self.i/self.timer_40*self.timer_40 == self.i:
+#				dataQueue.put('_timer_40_')
+
+	def set_40_timer(self):
+		while self.run_40_timer:
+			try:
+				self.j += 1
+			except:
+				self.j = 0
+			time.sleep(0.1)
+			if self.j/self.timer_40*self.timer_40 == self.j:
 				dataQueue.put('_timer_40_')
 
 	def packet_process(self, recv_data):
 		# FIXME: Linear judgement for server_packet_id
 		if self.status == 'PW':
-			if recv_data[0:2] == self.server_packet_id['_success_']:
+			if self.server_packet_id[recv_data[0:2]] == '_success_':
 				self.passwd_success(recv_data)
-			elif recv_data[0:2] == self.server_packet_id['_failure_']:
+			elif self.server_packet_id[recv_data[0:2]] == '_failure_':
 				self.passwd_failure(recv_data)
 
 		elif self.status == 'OFF':
-			if recv_data[0:2] == self.server_packet_id['_login_response_']:
+			if self.server_packet_id[recv_data[0:2]] == '_login_response_':
 				self.login_auth(recv_data)
-			elif recv_data[0:2] == self.server_packet_id['_passwd_response_']:
+			elif self.server_packet_id[recv_data[0:2]] == '_passwd_response_':
 				self.passwd_auth(recv_data)
-			elif recv_data[0:2] == self.server_packet_id['_success_']:
+			elif self.server_packet_id[recv_data[0:2]] == '_success_':
 				self.login_success(recv_data)
-			elif recv_data[0:2] == self.server_packet_id['_failure_']:
+			elif self.server_packet_id[recv_data[0:2]] == '_failure_':
 				self.login_failure(recv_data)
 
 		elif self.status == 'ON':
-			if recv_data[0:3] == self.server_packet_id['_alive_38_server_']:
-				# FIXME: Only need to check alive_version once
-				self.alive_version_check(recv_data)
-			elif recv_data[0:1] == self.server_packet_id['_alive_40_server_']\
-				and len(recv_data) == 40:
-				self.alive_40_reply(recv_data)
-			elif recv_data[0:2] == self.server_packet_id['_alive_4_server_']\
-				and len(recv_data) == 4:
-				self.alive_4_reply(recv_data)
-			elif recv_data[0:2] == self.server_packet_id['_logout_response_']:
-				self.logout_auth(recv_data)
-			elif recv_data[0:2] == self.server_packet_id['_success_']:
-				self.logout_success(recv_data)
-			elif recv_data[0:2] == self.server_packet_id['_failure_']:
-				self.logout_failure(recv_data)
-#			elif recv_data[0:2] == self.server_packet_id['_Server_Info']:
-#				pass
-#			elif recv_data[0:2] == self.server_packet_id['_Notice_']:
-#				pass
+
+			## for test
+			print len(recv_data)
+			self.show_hex(recv_data)
+			##
+
+			# FIXME:!!No server_packet_id named '\x4d\x26\x6b' will occur errors!!
+			if recv_data[0:3] in self.server_packet_id:
+				if self.server_packet_id[recv_data[0:3]] == '_alive_38_server_':
+					# FIXME: Only need to check alive_version once
+					self.alive_version_check(recv_data)
+			elif recv_data [0:2] in self.server_packet_id:
+				if self.server_packet_id[recv_data[0:2]] == '_alive_4_server_'\
+					and len(recv_data) == 4:
+					self.alive_4_reply(recv_data)
+				elif self.server_packet_id[recv_data[0:2]] == '_logout_response_':
+					self.logout_auth(recv_data)
+				elif self.server_packet_id[recv_data[0:2]] == '_success_':
+					self.logout_success(recv_data)
+				elif self.server_packet_id[recv_data[0:2]] == '_failure_':
+					self.logout_failure(recv_data)
+			elif recv_data [0:1] in self.server_packet_id:
+				if self.server_packet_id[recv_data[0:1]] == '_alive_40_server_'\
+					and len(recv_data) == 40:
+					self.alive_40_reply(recv_data)
+#				elif self.server_packet_id[recv_data[0:2]] == '_Server_Info':
+#					pass
+#				elif self.server_packet_id[recv_data[0:2]] == '_Notice_':
+#					pass
 
 
 	def login_request(self):
@@ -400,25 +437,25 @@ class drcom_client():
 		self.drcom_sock=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 		self.drcom_sock.setblocking(0)
 
-		try:	
-			self.drcom_sock.bind((self.host_ip_dec,self.server_port))
+		#!#try:	
+		#!#	self.drcom_sock.bind((self.host_ip_dec,self.server_port))
 
-		except:
+		#!#except:
 #			self.tag=U'出错了 !'
 #			self.balloons(U'端口绑定失败!')
-			err_num = '05'
-			self.exception(err_num)
+		#!#	err_num = '05'
+		#!#	self.exception(err_num)
 			# FIXME: it must be successful in closing socket.
-			self.drcom_sock.close()
-			return False
+		#!#	self.drcom_sock.close()
+		#!#	return False
 
 		proc_name='_login_request_'
 		send_data=self.host_packet_id[proc_name]+'\x51\x02\x03'+'\x00'*15
 
 		try:
-			self.safe_send.acquire()
+			#self.safe_send.acquire()
 			self.drcom_sock.sendto(send_data,(self.server_ip,self.server_port))
-			self.safe_send.release()
+			#self.safe_send.release()
 		except:
 #			self.tag=U'出错了 !'
 #			self.balloons(U'失去连接 [请求] !')
@@ -430,6 +467,9 @@ class drcom_client():
 
 	def login_auth(self,recv_data):
 		# start_login and build the login package
+		## for test
+		print '--login_auth--'
+		##
 		self.service_identifier=recv_data[4:8]
 		proc_name='_login_auth_'
 		length=len(self.account)+20
@@ -467,13 +507,19 @@ class drcom_client():
 		unknown='\x03\x00\x02\x0C'+'\x00\xF3\x31\x9F\x01\x00'
 		auto_logout=0
 		multicast_mode=0
-		self.ip_dog=1
+		## for test: ip_dog = 0
+		self.ip_dog=0
+		##
 		send_data=data_front+login_c_md5+chr(self.ip_dog)+'\x00'*4+host_info+zero3+\
 			unknown+self.mac_addr+chr(auto_logout)+chr(multicast_mode)
+
+		## for test
+		print len(send_data)
+		##
 		try:
-			self.safe_send.acquire()
+			#self.safe_send.acquire()
 			self.drcom_sock.sendto(send_data,(self.recv_addr))
-			self.safe_send.acquire()
+			#self.safe_send.acquire()
 		except:
 #			self.tag=U'出错了 !'
 #			self.balloons(U'失去连接 [应答] !')
@@ -513,12 +559,18 @@ class drcom_client():
 	def login_success(self, recv_data):
 			
 		self.status = 'ON'
-		self.run_thread_timer = 1
-		thread.start_new_thread(self.set_timer,())
+#		self.run_thread_timer = 1
+		self.run_38_timer = 1
+		thread.start_new_thread(self.set_38_timer,())
 
 		time_usage = recv_data[8]+recv_data[7]+recv_data[6]+recv_data[5]
 		vol_usage = recv_data[12]+recv_data[11]+recv_data[10]+recv_data[9]
 		cash_usage = recv_data[16]+recv_data[15]+recv_data[14]+recv_data[13]
+		## for test
+		#self.show_hex(time_usage)
+		#self.show_hex(vol_usage)
+		#self.show_hex(cash_usage)
+		##
 		self.auth_info=recv_data[23:39]
 		self.show_usage(time_usage,vol_usage,cash_usage)
 
@@ -558,9 +610,9 @@ class drcom_client():
 		proc_name='_logout_request_'
 		send_data=self.host_packet_id[proc_name]+'\x80\x02\x03'+'\x00'*15
 		try:
-			self.safe_send.acquire()
+			#self.safe_send.acquire()
 			self.drcom_sock.sendto(send_data,(self.serv_addr))
-			self.safe_send.release()
+			#self.safe_send.release()
 		except:
 #			self.tag=U'注销失败 !'
 #			self.balloons(U'失去连接 [请求] !')
@@ -570,7 +622,7 @@ class drcom_client():
 
 	def logout_auth(self, recv_data):
 		self.service_identifier=recv_data[4:8]
-		proc_name='_logout_'
+		proc_name='_logout_auth_'
 		md5_content=self.host_packet_id[proc_name]+self.service_identifier+self.password
 		logout_md5=self.md5_key(md5_content)
 		mac_xor=self.hex_xor(self.mac_addr,logout_md5,len(self.mac_addr))
@@ -580,9 +632,9 @@ class drcom_client():
 			usr_name_zero+mac_xor+self.auth_info
 
 		try:
-			self.safe_send.acquire()
+			#self.safe_send.acquire()
 			self.drcom_sock.sendto(send_data,(self.serv_addr))
-			self.safe_send.release()
+			#self.safe_send.release()
 		except:
 #			self.tag=U'注销失败 !'
 #			self.balloons(U'失去连接 [请求] !')
@@ -598,7 +650,9 @@ class drcom_client():
 	def logout_success(self, recv_data):
 
 		self.status = 'OFF'
-		self.run_thread_timer = 0
+#		self.run_thread_timer = 0
+		self.run_38_timer = 0
+		self.run_40_timer = 0
 
 		if self.ip_dog == '1':
 			try:
@@ -651,13 +705,25 @@ class drcom_client():
 		self.drcom_sock=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 		self.drcom_sock.setblocking(0)
 
+		try:	
+			self.drcom_sock.bind((self.host_ip_dec,self.server_port))
+
+		except:
+#			self.tag=U'出错了 !'
+#			self.balloons(U'端口绑定失败!')
+			err_num = '05'
+			self.exception(err_num)
+			# FIXME: it must be successful in closing socket.
+			self.drcom_sock.close()
+			return False
+
 		proc_name='_passwd_request_'
 		send_data=self.host_packet_id[proc_name]+'\x51\x02\x03'+'\x00'*15
 
 		try:
-			self.safe_send.acquire()
+			#self.safe_send.acquire()
 			self.drcom_sock.sendto(send_data,(self.server_ip,self.server_port))
-			self.safe_send.release()
+			#self.safe_send.release()
 
 		except:
 			err_num = '26'
@@ -690,9 +756,9 @@ class drcom_client():
 		send_data=passwd_data_front+new_passwd_xor+passwd_unknown
 		
 		try:
-			self.safe_send.acquire()
+			#self.safe_send.acquire()
 			self.drcom_sock.sendto(send_data,(self.recv_addr))
-			self.safe_send.release()
+			#self.safe_send.release()
 		except:
 #			self.tag=U'出错了 ！'
 #			self.balloons(U'失去连接（应答） !')
@@ -733,14 +799,31 @@ class drcom_client():
 		else:
 			self.version = 3.7
 
+		## for test
+		print self.version
+		##
+
+		# start _timer_40_
+		# FIXME: logout -> alive_version_check? No way for "OFF" status :)
+		try:
+			self.run_40_timer
+		except:
+			self.run_40_timer = 1
+			thread.start_new_thread(self.set_40_timer, ())
+
+		else:
+			if self.run_40_timer == 0:
+				self.run_40_timer = 1
+				thread.start_new_thread(self.set_40_timer,())
+
 	def alive_38_request(self):
 		proc_name='_alive_38_client_'
 		unknown0 = '\x00\x00'
 		send_data=self.host_packet_id[proc_name]+self.login_a_md5+'\x00'*3+self.auth_info+unknown0
 		try:
-			self.safe_send.acquire()
+			#self.safe_send.acquire()
 			self.drcom_sock.sendto(send_data,(self.serv_addr))
-			self.safe_send.release()
+			#self.safe_send.release()
 		except:
 #			self.tag=U'出错了 !!'
 #			self.balloons(U'失去连接 [alive 请求] !')
@@ -755,7 +838,9 @@ class drcom_client():
 			self.alive_40_request_new()
 
 	def alive_40_request_old(self):
-
+		## for test
+		print 'alive_40_request_old'
+		##
 		proc_name='_alive_40_client_'
 		unknown0='\x3e\x00'
 		if self.alive_account0 >= 0xff:
@@ -771,9 +856,9 @@ class drcom_client():
 			+chr(self.alive_account1) + '\x00'*29
 	
 		try:
-			self.safe_send.acquire()
+			#self.safe_send.acquire()
 			self.drcom_sock.sendto(send_data,(self.serv_addr))
-			self.safe_send.release()
+			#self.safe_send.release()
 		except:
 #			self.tag=U'出错了 !!'
 #			self.balloons(U'失去连接 [alive 请求] !')
@@ -782,6 +867,9 @@ class drcom_client():
 			self.quit_common()
 
 	def alive_40_request_new(self):
+		## for test
+		print 'alive_40_request_new'
+		##
 		proc_name='_alive_40_client_'
 		server_ack=self.server_ack_40
 		unknown0='\x7a\x03'
@@ -795,9 +883,9 @@ class drcom_client():
 			+chr(self.alive_account1) + '\x00'*5 + server_ack +'\x00'*19
 	
 		try:
-			self.safe_send.acquire()
+			#self.safe_send.acquire()
 			self.drcom_sock.sendto(send_data,(self.serv_addr))
-			self.safe_send.release()
+			#self.safe_send.release()
 		except:
 			err_num = '22'
 			self.exception(err_num)
@@ -828,9 +916,9 @@ class drcom_client():
 			+ chr(self.alive_account1) + '\x00'*5 + server_ack +'\x03'+'\x00'*19
 
 		try:
-			self.safe_send.acquire()
+			#self.safe_send.acquire()
 			self.drcom_sock.sendto(send_data,(self.serv_addr))
-			self.safe_send.release()
+			#self.safe_send.release()
 		except:
 #			self.tag=U'出错了 !!'
 #			self.balloons(U'失去连接 [alive 请求] !')
@@ -859,9 +947,9 @@ class drcom_client():
 		keep_alive_md5=self.md5_key(msg_content)
 		send_data=self.host_packet_id[proc_name]+(msg)+'\x01'+keep_alive_md5+'\x00'+self.auth_info
 		try:
-			self.safe_send.acquire()
+			#self.safe_send.acquire()
 			self.drcom_sock.sendto(send_data,self.serv_addr)
-			self.safe_send.release()
+			#self.safe_send.release()
 		except:
 #			self.tag=U'出错了 !!'
 #			self.balloons(U'失去连接［alive 应答］ !')
@@ -927,36 +1015,43 @@ class drcom_client():
 		
 		x = self.tray.get_geometry()[1][0]
 		if self.tray.get_visible()==True:
-			x += int(self.tray.get_size() / 2) 
+			x += int(self.tray.get_size()/2) 
 		else:
-			x -= int(self.tray.get_size() / 2)
+			x -= int(self.tray.get_size()/2)
 		return x
 
 	def get_y(self):
 		
 		y = self.tray.get_geometry()[1][1]
 		if self.tray.get_visible()==True:
-			y += int(self.tray.get_size() / 2) 
+			y += int(self.tray.get_size()/2) 
 		else:
-			y -= int(self.tray.get_size() / 2) 
+			y -= int(self.tray.get_size()/2) 
 		return y
 
-	def show_usage(self, time_usage, vol_usage, cash_usage=''):
+	def show_usage(self, time_usage, vol_usage, cash_usage):
 
-		self.info=_('Used ')+self.show_dec(time_usage)+_(' Min, ')+self.show_dec(vol_usage)+\
-			_(' KB')+'\n'
+		self.info=_('Used ') + self.show_dec(time_usage) + _(' Min, ') +\
+					self.show_dec(vol_usage) + _(' KB')
 		
 		if cash_usage == '\xff\xff\xff\xff':
+			## for test
+			#print '?'*10
+			##
 			return True
-
+		self.info += '\n'
 		if len(str(self.show_dec(cash_usage)))==4:
-			self.info=self.info+_('Balance')+self.show_dec(cash_usage)[0:2]+'.'+self.show_dec(cash_usage)[2:4]+_(' yuan.')
+			self.info += _('Balance') + self.show_dec(cash_usage)[0:2] + '.' +\
+						self.show_dec(cash_usage)[2:4] + _(' yuan.')
 		if len(str(self.show_dec(cash_usage)))==3:
-			self.info=self.info+_('Balance')+self.show_dec(cash_usage)[0:1]+'.'+self.show_dec(cash_usage)[1:3]+_(' yuan.')
+			self.info += _('Balance') + self.show_dec(cash_usage)[0:1] + '.' +\
+						self.show_dec(cash_usage)[1:3] + _(' yuan.')
 		if len(str(self.show_dec(cash_usage)))==2:
-			self.info=self.info+_('Balance')+'0'+'.'+self.show_dec(cash_usage)[0:2]+_(' yuan.')
+			self.info += _('Balance')+'0'+'.'+self.show_dec(cash_usage)[0:2] +\
+						_(' yuan.')
 		if len(str(self.show_dec(cash_usage)))==1:
-			self.info=self.info+_('Balance')+'0'+'.'+'0'+self.show_dec(cash_usage)+_(' yuan.')
+			self.info += _('Balance')+'0'+'.'+'0'+self.show_dec(cash_usage)+\
+						_(' yuan.')
 
  	def balloons(self, tag, info):
 
@@ -1013,6 +1108,7 @@ class drcom_client():
 
 		self.read_conf()
 		thread.start_new_thread(self.listen,())
+		thread.start_new_thread(self.serv_ack,())
 
 		vbox = gtk.VBox(False, 0)
 		self.window.add(vbox)
