@@ -15,6 +15,10 @@ import thread, Queue
 
 safe_send = thread.allocate_lock()
 dataQueue = Queue.Queue()
+#IP_ADDR = 'localhost'
+IP_ADDR = '202.1.1.1'
+#PORT = 8080
+PORT = 61440
 
 ## global variables
 conf_name='drcom.conf'
@@ -205,10 +209,12 @@ class drcom_client():
 	def init_conf(self):
 		self.BUFFER=1024
 		self.server_brand='Drco'
-		self.server_ip='202.1.1.1'
+#		self.server_ip='202.1.1.1'
 #		self.server_ip='localhost'
-		self.server_port=61440
+		self.server_ip= IP_ADDR
+#		self.server_port=61440
 #		self.server_port=8080
+		self.server_port=PORT
 		self.ifname=self.get_ifname()
 		self.md5_tail='\x14\x00\x07\x0b'
 		self.host_ip=self.get_ip_addr()
@@ -347,6 +353,7 @@ class drcom_client():
 				# FIXME: aweful way to be removed
 				self.serv_addr=recv_addr
 				self.recv_addr=recv_addr
+				self.server_ip=self.serv_addr[0]
 				dataQueue.put('_serv_ack_')
 				dataQueue.put(recv_data)
 
@@ -452,18 +459,21 @@ class drcom_client():
 		self.drcom_sock=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 		self.drcom_sock.setblocking(0)
 
-		try:	
-			self.drcom_sock.bind((self.host_ip_dec,self.server_port))
-
-		except:
-#			self.tag=U'出错了 !'
-#			self.balloons(U'端口绑定失败!')
-			err_num = '05'
-			self.exception(err_num)
-			# FIXME: it must be successful in closing socket.
-			self.drcom_sock.close()
-			return False
-
+		## for test
+		if IP_ADDR != 'localhost':
+		##
+			try:	
+				self.drcom_sock.bind((self.host_ip_dec,self.server_port))
+	
+			except:
+#				self.tag=U'出错了 !'
+#				self.balloons(U'端口绑定失败!')
+				err_num = '05'
+				self.exception(err_num)
+				# FIXME: it must be successful in closing socket.
+				self.drcom_sock.close()
+				return False
+		
 		proc_name='_login_request_'
 		send_data=self.host_packet_id[proc_name]+'\x51\x02\x03'+'\x00'*15
 
@@ -523,7 +533,7 @@ class drcom_client():
 		auto_logout=0
 		multicast_mode=0
 		## for test: ip_dog = 0
-		self.ip_dog=0
+		self.ip_dog = 1
 		##
 		send_data=data_front+login_c_md5+chr(self.ip_dog)+'\x00'*4+host_info+zero3+\
 			unknown+self.mac_addr+chr(auto_logout)+chr(multicast_mode)
@@ -590,7 +600,7 @@ class drcom_client():
 		self.show_usage(time_usage,vol_usage,cash_usage)
 
 		## local address
-		if self.ip_dog == '1':
+		if self.ip_dog == 1:
 			if recv_data[16+16+11] == '\x01':
 				## handy configuration
 				self.handy_config()
@@ -608,6 +618,89 @@ class drcom_client():
 		err_num = '31'
 		self.exception(err_num)
 		self.tray.set_tooltip(_("Current State: Online"))
+
+## local addr config
+
+	def auto_config(self,recv_data):
+
+		## clean local_addr array
+		self.local_addr = []
+
+		lenth = len(recv_data)/12 * 12
+		for i in range(0,lenth,12):
+			if recv_data[i] == '\x00':
+				addr = recv_data[i+4:i+8]
+				mask = recv_data[i+8:i+12]
+				self.local_addr.append(addr)
+				self.local_addr.append(mask)
+			elif recv_data[i] == '\x01':
+				break
+		## add serv_ip & mask
+		## for test
+		# serv_ip -- binary, while server_ip -- decimal
+		self.serv_ip = socket.inet_aton(self.serv_addr[0])
+		self.show_hex(self.serv_ip)
+		self.show_hex(self.get_dns_addr()[0])
+		self.show_hex(self.host_ip)
+		##
+		self.local_addr.append(self.serv_ip+'\x00'*3)
+		self.local_addr.append('\xff'+'\x00'*3)
+
+	def handy_config(self):
+		## for test
+		print '--handy_config--'
+		##
+
+		## clean local_addr array
+		self.local_addr = []
+
+		host_ip = self.host_ip[0] + '\x00'*3 
+		mask = '\xff' + '\x00'*3
+		self.local_addr.append(host_ip)
+		self.local_addr.append(mask)
+
+		dns1_ip=self.get_dns_addr()[0][0]+'\x00'*3
+		dns2_ip=self.get_dns_addr()[1][0]+'\x00'*3
+		if dns2_ip == '\x00'*4:
+			self.local_addr.append(dns1_ip)
+			self.local_addr.append(mask)
+		else:
+			self.local_addr.append(dns1_ip)
+			self.local_addr.append(mask)
+			self.local_addr.append(dns2_ip)
+			self.local_addr.append(mask)
+
+		## add serv_ip & mask
+		## for test
+		# serv_ip -- binary, while server_ip -- decimal
+		self.serv_ip = socket.inet_aton(self.serv_addr[0])
+		self.show_hex(self.serv_ip)
+		self.show_hex(self.get_dns_addr()[0])
+		self.show_hex(self.host_ip)
+		##
+		self.local_addr.append(self.serv_ip+'\x00'*3)
+		self.local_addr.append('\xff'+'\x00'*3)
+
+## auth_module start/stop
+
+	def auth_module_start(self):
+		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		num = len(self.local_addr) / 2
+		data = self.local_addr
+		fmt = '16s'+'i'+'4s'* num*2
+		param = struct.pack(fmt, self.ifname[:15], num, *data)
+		s.setsockopt(socket.IPPROTO_IP, 64+2048+64+1, param)
+		pid = os.getpid()
+		auto_logout = 0
+		auth_cmd = struct.pack('iii16s', 1, pid, auto_logout, self.auth_info)
+		s.setsockopt(socket.IPPROTO_IP, 64+2048+64, auth_cmd)
+
+
+	def auth_module_stop(self):
+		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		auth_cmd = struct.pack('iii16s', 0, 0, 0, self.auth_info)
+		s.setsockopt(socket.IPPROTO_IP, 64+2048+64, auth_cmd)
+
 
 	def logout_request(self):
 		try:
@@ -669,7 +762,7 @@ class drcom_client():
 		self.run_38_timer = 0
 		self.run_40_timer = 0
 
-		if self.ip_dog == '1':
+		if self.ip_dog == 1:
 			try:
 				self.auth_module_stop()
 			except:
@@ -750,18 +843,21 @@ class drcom_client():
 #		print '--prepare for sending data--'
 		##
 
-		try:
-			#self.safe_send.acquire()
-			self.drcom_sock.sendto(send_data,(self.server_ip,self.server_port))
-			#self.safe_send.release()
-
-		except:
-			err_num = '26'
-			self.exception(err_num)
-#			self.tag=U'出错了 ！'
-#			self.balloons(U'失去连接（请求） !')
-			# FIXME: it must be successful in closing socket.
-			self.drcom_sock.close()
+		## for test
+		if IP_ADDR != 'localhost':
+		##
+			try:
+				#self.safe_send.acquire()
+				self.drcom_sock.sendto(send_data,(self.server_ip,self.server_port))
+				#self.safe_send.release()
+	
+			except:
+				err_num = '26'
+				self.exception(err_num)
+#				self.tag=U'出错了 ！'
+#				self.balloons(U'失去连接（请求） !')
+				# FIXME: it must be successful in closing socket.
+				self.drcom_sock.close()
 
 		## it is totally incorrect!!
 #		else:
