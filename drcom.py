@@ -246,8 +246,8 @@ class drcom_client():
 		self.local_addr = []
 		self.local_mask = []
 
-		self.timer_38 = 20
-		self.timer_40 = 16
+		self.timer_38 = 200
+		self.timer_40 = 160
 
 		self.exception_id={
 			'00':_("Unknown errors"),
@@ -289,6 +289,8 @@ class drcom_client():
 	def listen(self):
 		# FIXME: cost much resource for Off-line State
 		while 1:
+			# FIXME: CPU Usage ~= 40%
+			time.sleep(0.1)
 			try:
 				data = dataQueue.get(block=False)
 			except Queue.Empty:
@@ -335,6 +337,8 @@ class drcom_client():
 	def serv_ack(self):
 		# FIXME: cost much resource for Off-line State
 		while 1:
+			# FIXME: CPU Usage ~= 40%
+			time.sleep(0.1)
 			try:
 				recv_data, recv_addr = self.drcom_sock.recvfrom(self.BUFFER)
 			except:
@@ -374,14 +378,19 @@ class drcom_client():
 				dataQueue.put('_timer_40_')
 
 	def packet_process(self, recv_data):
+		# FIXME:!!No server_packet_id named '\x4d\x26\x6b' will occur errors!
 		# FIXME: Linear judgement for server_packet_id
 		if self.status == 'PW':
-			if self.server_packet_id[recv_data[0:2]] == '_success_':
-				self.passwd_success(recv_data)
-			elif self.server_packet_id[recv_data[0:2]] == '_failure_':
-				self.passwd_failure(recv_data)
+			if recv_data[0:2] in self.server_packet_id:
+				if self.server_packet_id[recv_data[0:2]] == '_success_':
+					self.passwd_success(recv_data)
+				elif self.server_packet_id[recv_data[0:2]] == '_failure_':
+					self.passwd_failure(recv_data)
 
 		elif self.status == 'OFF':
+			## for test
+#			self.show_hex(recv_data)
+			##
 			# FIXME:!!No server_packet_id named '\x4d\x26\x6b' will occur errors!!
 			if self.server_packet_id[recv_data[0:2]] == '_login_response_':
 				self.login_auth(recv_data)
@@ -690,6 +699,11 @@ class drcom_client():
 
 	def passwd_request(self):
 		self.get_newpasswd_account()
+
+		## for test
+#		print '--passwd--'
+#		print 'status =',self.status
+		##
 		try:
 			if self.status == 'ON':
 #				self.tag=U'出错了 ！'
@@ -697,34 +711,44 @@ class drcom_client():
 				err_num = '43'
 				self.exception(err_num)
 				return False
-
-			if self.new_password!=self.new_password_a:
-#				self.tag=U'出错了 ！'
-#				self.balloons(U' 密码输入不一致 !')
-				err_num = '40'
-				self.exception(err_num)
-				return False
 		except:
-			self.status == 'OFF'
+			self.status = 'OFF'
+
+		if self.new_password!=self.new_password_a:
+#			self.tag=U'出错了 ！'
+#			self.balloons(U' 密码输入不一致 !')
+			err_num = '40'
+			self.exception(err_num)
+			return False
+
+		## for test
+#		print '-- socket initial 4 passwd --'
+		##
 
 		# socket initialization
+		# FIXME: If drcom_sock has defined, is it better to close first?
+		#self.drcom_sock.close()
 		self.drcom_sock=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 		self.drcom_sock.setblocking(0)
 
-		try:	
-			self.drcom_sock.bind((self.host_ip_dec,self.server_port))
+#!#		try:	
+#!#			self.drcom_sock.bind((self.host_ip_dec,self.server_port))
 
-		except:
+#!#		except:
 #			self.tag=U'出错了 !'
 #			self.balloons(U'端口绑定失败!')
-			err_num = '05'
-			self.exception(err_num)
+#!#			err_num = '05'
+#!#			self.exception(err_num)
 			# FIXME: it must be successful in closing socket.
-			self.drcom_sock.close()
-			return False
+#!#			self.drcom_sock.close()
+#!#			return False
 
 		proc_name='_passwd_request_'
 		send_data=self.host_packet_id[proc_name]+'\x51\x02\x03'+'\x00'*15
+
+		## for test
+#		print '--prepare for sending data--'
+		##
 
 		try:
 			#self.safe_send.acquire()
@@ -738,14 +762,29 @@ class drcom_client():
 #			self.balloons(U'失去连接（请求） !')
 			# FIXME: it must be successful in closing socket.
 			self.drcom_sock.close()
-		else:
-			self.status = 'PW'
+
+		## it is totally incorrect!!
+#		else:
+#			self.status = 'PW'
 
 
 	def passwd_auth(self, recv_data):
+
+		## for test
+		#print '--passwd_auth--'
+		##
+
 		proc_name='_new_passwd_'
+		## Be care: no missing service_identifier
+		self.service_identifier=recv_data[4:8]
+		##
 		length=len(self.old_account)+20
 		passwd_data_head=self.host_packet_id[proc_name]+'\x00'+chr(length)
+
+		## for test
+		#print '--md5--'
+		##
+
 		md5_content=self.host_packet_id[proc_name]+\
 			self.service_identifier+self.old_password
 		passwd_a_md5=self.md5_key(md5_content)
@@ -754,6 +793,10 @@ class drcom_client():
 			self.old_account+passwd_usr_name_zero
 		md5_content=passwd_a_md5+self.old_password
 		passwd_b_md5=self.md5_key(md5_content)
+		
+		## for test
+		#print '--new_passwd--'
+		##
 
 		new_passwd=self.new_password+'\x00'*(16-len(self.new_password))
 		new_passwd_xor=self.hex_xor(passwd_b_md5, new_passwd, 16)
@@ -761,6 +804,10 @@ class drcom_client():
 		passwd_unknown='\x12'+'\x00'*3+'\x16'+'\x00'*3+'\x04'+'\x00'*7
 		send_data=passwd_data_front+new_passwd_xor+passwd_unknown
 		
+		## for test
+		#print '--prepare for sending data--'
+		##
+
 		try:
 			#self.safe_send.acquire()
 			self.drcom_sock.sendto(send_data,(self.recv_addr))
@@ -771,6 +818,8 @@ class drcom_client():
 			err_num = '27'
 			self.exception(err_num)
 			return False
+		else:
+			self.status = 'PW'
 
 	def passwd_failure(self, recv_data):
 		if (recv_data[4]=='\x03'):
@@ -849,12 +898,12 @@ class drcom_client():
 		##
 		proc_name='_alive_40_client_'
 		unknown0='\x3e\x00'
+		self.alive_account0 += 0x01
 		if self.alive_account0 >= 0xff:
 			self.alive_account0 -= 0xff
-		self.alive_account0 += 0x01
+		self.alive_account1 += 0x05
 		if self.alive_account1 >= 0xff:
 			self.alive_account1 -= 0xff
-		self.alive_account1 += 0x05
 
 		account= 1
 		send_data=self.host_packet_id[proc_name]+chr(self.alive_account0) +\
@@ -917,9 +966,9 @@ class drcom_client():
 		self.alive_account0 += 1
 		if self.alive_account0 >= 0xff:
 			self.alive_account0 -= 0xff
+		self.alive_account1 += 1
 		if self.alive_account1 >= 0x3c:
 			self.alive_account1 -= 0x3c
-		self.alive_account1 += 1
 
 		unknown0='\x7a\x03'
 		account= 3
