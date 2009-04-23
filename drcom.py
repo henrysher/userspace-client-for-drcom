@@ -294,6 +294,10 @@ class drcom_client():
 			except Queue.Empty:
 				pass
 			else:
+				# for test
+				print data
+				#
+
 				## GUI COMMAND
 				if data == '_login_':
 					self.login_request()
@@ -313,17 +317,18 @@ class drcom_client():
 						self.packet_process(recv_data)
 
 				## Timer Signal
-				# FIXME: if _timer_XX is behind _serv_ack_[logout] in dataQueue
-				elif data == '_timer_38_':
-					## for test
-					print '_timer_38_'
-					#
-					self.alive_38_request()
-				elif data == '_timer_40_':
-					## for test
-					print '_timer_40_'
-					#
-					self.alive_40_request()
+				# FIXME: !!!if _timer_XX is behind _serv_ack_[logout] in dataQueue!!!
+				elif self.status == 'ON':
+					if data == '_timer_38_':
+						## for test
+						#print '_timer_38_'
+						#
+						self.alive_38_request()
+					elif data == '_timer_40_':
+						## for test
+						#print '_timer_40_'
+						#
+						self.alive_40_request()
 				else:
 					pass
 
@@ -377,6 +382,7 @@ class drcom_client():
 				self.passwd_failure(recv_data)
 
 		elif self.status == 'OFF':
+			# FIXME:!!No server_packet_id named '\x4d\x26\x6b' will occur errors!!
 			if self.server_packet_id[recv_data[0:2]] == '_login_response_':
 				self.login_auth(recv_data)
 			elif self.server_packet_id[recv_data[0:2]] == '_passwd_response_':
@@ -389,8 +395,8 @@ class drcom_client():
 		elif self.status == 'ON':
 
 			## for test
-			print len(recv_data)
-			self.show_hex(recv_data)
+			#print len(recv_data)
+			#self.show_hex(recv_data)
 			##
 
 			# FIXME:!!No server_packet_id named '\x4d\x26\x6b' will occur errors!!
@@ -468,7 +474,7 @@ class drcom_client():
 	def login_auth(self,recv_data):
 		# start_login and build the login package
 		## for test
-		print '--login_auth--'
+		#print '--login_auth--'
 		##
 		self.service_identifier=recv_data[4:8]
 		proc_name='_login_auth_'
@@ -514,7 +520,7 @@ class drcom_client():
 			unknown+self.mac_addr+chr(auto_logout)+chr(multicast_mode)
 
 		## for test
-		print len(send_data)
+		#print len(send_data)
 		##
 		try:
 			#self.safe_send.acquire()
@@ -800,7 +806,7 @@ class drcom_client():
 			self.version = 3.7
 
 		## for test
-		print self.version
+		#print self.version
 		##
 
 		# start _timer_40_
@@ -839,7 +845,7 @@ class drcom_client():
 
 	def alive_40_request_old(self):
 		## for test
-		print 'alive_40_request_old'
+		#print 'alive_40_request_old'
 		##
 		proc_name='_alive_40_client_'
 		unknown0='\x3e\x00'
@@ -868,7 +874,7 @@ class drcom_client():
 
 	def alive_40_request_new(self):
 		## for test
-		print 'alive_40_request_new'
+		#print 'alive_40_request_new'
 		##
 		proc_name='_alive_40_client_'
 		server_ack=self.server_ack_40
@@ -880,7 +886,7 @@ class drcom_client():
 
 		send_data = self.host_packet_id[proc_name]+chr(self.alive_account0) +\
 			'\x28\x00\x0b' + chr(account) +'\x1e\x00' +unknown0\
-			+chr(self.alive_account1) + '\x00'*5 + server_ack +'\x00'*19
+			+chr(self.alive_account1) + '\x00'*5 + server_ack +'\x00'*20
 	
 		try:
 			#self.safe_send.acquire()
@@ -894,6 +900,12 @@ class drcom_client():
 			self.quit_common()
 
 	def alive_40_reply(self, recv_data):
+		# FIXME: no execute this function :(
+
+		## for test
+		#print 'alive_40_reply'
+		##
+
 		pkt_no=recv_data[5:6]
 		if pkt_no=='\x02':
 			self.server_ack_40=recv_data[16:20]
@@ -903,17 +915,17 @@ class drcom_client():
 		proc_name='_alive_40_client_'
 		server_ack=self.server_ack_40
 		self.alive_account0 += 1
+		if self.alive_account0 >= 0xff:
+			self.alive_account0 -= 0xff
 		if self.alive_account1 >= 0x3c:
 			self.alive_account1 -= 0x3c
-		if self.alive_account1 >= 0xff:
-			self.alive_account1 -= 0xff
 		self.alive_account1 += 1
 
 		unknown0='\x7a\x03'
 		account= 3
 		send_data=self.host_packet_id[proc_name]+chr(self.alive_account0) +\
 			'\x28\x00\x0b' + chr(account) +'\x1e\x00' +unknown0\
-			+ chr(self.alive_account1) + '\x00'*5 + server_ack +'\x03'+'\x00'*19
+			+ chr(self.alive_account1) + '\x00'*5 + server_ack +'\x03'+'\x00'*20
 
 		try:
 			#self.safe_send.acquire()
