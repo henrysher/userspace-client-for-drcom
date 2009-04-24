@@ -15,10 +15,10 @@ import thread, Queue
 
 safe_send = thread.allocate_lock()
 dataQueue = Queue.Queue()
-#IP_ADDR = 'localhost'
-IP_ADDR = '202.1.1.1'
-#PORT = 8080
-PORT = 61440
+IP_ADDR = 'localhost'
+#IP_ADDR = '202.1.1.1'
+PORT = 8080
+#PORT = 61440
 
 ## global variables
 conf_name='drcom.conf'
@@ -294,7 +294,7 @@ class drcom_client():
 
 	def listen(self):
 		# FIXME: cost much resource for Off-line State
-		while 1:
+		while self.run_listen:
 			# FIXME: CPU Usage ~= 40%
 			time.sleep(0.1)
 			try:
@@ -305,9 +305,14 @@ class drcom_client():
 				# for test
 				print data
 				#
+				if data == '_quit_':
+					self.run_listen = 0
+					self.run_serv_ack = 0
+					self.run_38_timer = 0
+					self.run_40_timer = 0
 
 				## GUI COMMAND
-				if data == '_login_':
+				elif data == '_login_':
 					self.login_request()
 				elif data == '_logout_':
 					self.logout_request()
@@ -342,7 +347,7 @@ class drcom_client():
 
 	def serv_ack(self):
 		# FIXME: cost much resource for Off-line State
-		while 1:
+		while self.run_serv_ack:
 			# FIXME: CPU Usage ~= 40%
 			time.sleep(0.1)
 			try:
@@ -1264,7 +1269,9 @@ class drcom_client():
 #		gtk.gdk.threads_enter()
 
 		self.read_conf()
+		self.run_listen = 1
 		thread.start_new_thread(self.listen,())
+		self.run_serv_ack = 1
 		thread.start_new_thread(self.serv_ack,())
 
 		vbox = gtk.VBox(False, 0)
@@ -1554,6 +1561,10 @@ class drcom_client():
 		gtk.main()
 		
 	def quit(self,widget):
+		## FIXME: program exits while threads processing
+		dataQueue.put('_quit_')
+		time.sleep(0.1)
+		##
 		gtk.main_quit()
 		sys.exit(0)
 
