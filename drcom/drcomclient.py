@@ -404,14 +404,15 @@ class drcom_client():
 #			self.show_hex(recv_data)
 			##
 			# FIXME:!!No server_packet_id named '\x4d\x26\x6b' will occur errors!!
-			if self.server_packet_id[recv_data[0:2]] == '_login_response_':
-				self.login_auth(recv_data)
-			elif self.server_packet_id[recv_data[0:2]] == '_passwd_response_':
-				self.passwd_auth(recv_data)
-			elif self.server_packet_id[recv_data[0:2]] == '_success_':
-				self.login_success(recv_data)
-			elif self.server_packet_id[recv_data[0:2]] == '_failure_':
-				self.login_failure(recv_data)
+			if recv_data [0:2] in self.server_packet_id:
+				if self.server_packet_id[recv_data[0:2]] == '_login_response_':
+					self.login_auth(recv_data)
+				elif self.server_packet_id[recv_data[0:2]] == '_passwd_response_':
+					self.passwd_auth(recv_data)
+				elif self.server_packet_id[recv_data[0:2]] == '_success_':
+					self.login_success(recv_data)
+				elif self.server_packet_id[recv_data[0:2]] == '_failure_':
+					self.login_failure(recv_data)
 
 		elif self.status == 'ON':
 
