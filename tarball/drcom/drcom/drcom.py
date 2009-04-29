@@ -191,7 +191,7 @@ class drcom_client():
 ##				self.password=self.hex_xor(mac_hex,password_xor,password_length)
 				self.password=password_xor
 			else:
-				password_xor=account_pass[account_end+1:len(account_pass)-1]
+				password_xor=account_pass[account_end+1:len(account_pass)]
 				password_length=len( password_xor )
 #				if password_length>6:
 #					mac_hex=self.mac_addr+'\x00'*(password_length-6)
@@ -200,6 +200,7 @@ class drcom_client():
 ##				mac_hex='\x01'*password_length
 ##				self.password=self.hex_xor(mac_hex,password_xor,password_length)
 				self.password=password_xor
+			self.show_hex(self.password)
 			self.passwd_flag=True
 			return True
 
