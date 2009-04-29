@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Dr.COM Client
+Categories=Network;GTK;GNOME;
+GenericName=GUI drcom-client
+Comment= ISP Authentication
+Exec=/usr/bin/drcom
+Icon=/usr/share/drcom/drcom.png
+StartupNotify=true
+StartupWMClass=drcom
+Terminal=false
+Type=Application
