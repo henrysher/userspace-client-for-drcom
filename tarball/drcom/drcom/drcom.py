@@ -15,10 +15,10 @@ import thread, Queue
 
 safe_send = thread.allocate_lock()
 dataQueue = Queue.Queue()
-#IP_ADDR = 'localhost'
-IP_ADDR = '202.1.1.1'
-#PORT = 8080
-PORT = 61440
+IP_ADDR = 'localhost'
+#IP_ADDR = '202.1.1.1'
+PORT = 8080
+#PORT = 61440
 
 ## global variables
 conf_name='drcom.conf'
@@ -106,7 +106,7 @@ class drcom_client():
 		try:
 			s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 			ip_addr=fcntl.ioctl(s.fileno(),0x8915,\
-				struct.pack('256s', self.ifname[:15]))[20:24]
+					struct.pack('256s', self.ifname[:15]))[20:24]
 		except:
 #			self.tag=U'出错了 ！'			
 #			self.balloons(U'获取ip失败!')
@@ -122,7 +122,7 @@ class drcom_client():
 		try:
 			s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 			mac_addr=fcntl.ioctl(s.fileno(), 0x8927,\
-				struct.pack('256s', self.ifname[:15]))[18:24]
+					struct.pack('256s', self.ifname[:15]))[18:24]
 		except:
 #			self.tag=U'出错了 '
 #			self.balloons(U'获取MAC地址失败!')
@@ -163,7 +163,7 @@ class drcom_client():
 
 
 	def read_conf(self):
-		self.init_conf()	
+		#self.init_conf()	
 		pathname=conf_path
 		if os.path.exists(pathname)==False:
 			os.mkdir(pathname)
@@ -212,11 +212,43 @@ class drcom_client():
 	def init_conf(self):
 		self.BUFFER=1024
 		self.server_brand='Drco'
-#		self.server_ip='202.1.1.1'
-#		self.server_ip='localhost'
+		self.exception_id={
+			'00':_("Unknown errors"),
+			'01':_("No active network card"),
+			'02':_("Can not get your ip address"),
+			'03':_("Can not get your MAC address"),
+			'04':_("Can not get your DNS address"),
+			'05':_("Fail to bind your port"),
+			'06':_("Can not get your server ip address"),
+			'07':_("Can not set up a socket"),
+			'10':_("You have already LOGIN"),
+			'11':_("You should LOGIN first"),
+			'20':_("Connection lost when login[request]"),
+			'21':_("Connection lost when login[response]"),
+			'22':_("Connection lost when keep_alive[request]"),
+			'23':_("Connection lost when keep_alive[response]"),
+			'24':_("Connection lost when logout[request]"),
+			'25':_("Connection lost when logout[response]"),
+			'26':_("Connection lost when changing password[request]"),
+			'27':_("Connection lost when changing password[response]"),
+			'30':_("Incorrect account name or password"),
+			'31':_("Login successful!"),
+			'32':_("Logout successful!"),
+			'33':_("No money left in your account!"),
+			'34':_("Account is working now!"),
+			'35':_("Logout failed!"),
+			'40':_("Password validation not the same"),
+			'41':_("New password successfully"),
+			'42':_("Incorrect old password"),
+			'43':_("Please logout first"),
+			# FIXME: not match with error codes
+			'50':_("Cannot start No.38 timer"),
+			'51':_("Cannot stop No.38 timer"),
+			'52':_("Cannot start No.40 timer"),
+			'53':_("Cannot stop No.40 timer"),
+			'60':_("Unknown type of keep_alive packet"),
+		}
 		self.server_ip= IP_ADDR
-#		self.server_port=61440
-#		self.server_port=8080
 		self.server_port=PORT
 		self.ifname=self.get_ifname()
 		self.md5_tail='\x14\x00\x07\x0b'
@@ -257,43 +289,6 @@ class drcom_client():
 
 		self.timer_38 = 200
 		self.timer_40 = 160
-
-		self.exception_id={
-			'00':_("Unknown errors"),
-			'01':_("No active network card"),
-			'02':_("Can not get your ip address"),
-			'03':_("Can not get your MAC address"),
-			'04':_("Can not get your DNS address"),
-			'05':_("Fail to bind your port"),
-			'06':_("Can not get your server ip address"),
-			'07':_("Can not set up a socket"),
-			'10':_("You have already LOGIN"),
-			'11':_("You should LOGIN first"),
-			'20':_("Connection lost when login[request]"),
-			'21':_("Connection lost when login[response]"),
-			'22':_("Connection lost when keep_alive[request]"),
-			'23':_("Connection lost when keep_alive[response]"),
-			'24':_("Connection lost when logout[request]"),
-			'25':_("Connection lost when logout[response]"),
-			'26':_("Connection lost when changing password[request]"),
-			'27':_("Connection lost when changing password[response]"),
-			'30':_("Incorrect account name or password"),
-			'31':_("Login successful!"),
-			'32':_("Logout successful!"),
-			'33':_("No money left in your account!"),
-			'34':_("Account is working now!"),
-			'35':_("Logout failed!"),
-			'40':_("Password validation not the same"),
-			'41':_("New password successfully"),
-			'42':_("Incorrect old password"),
-			'43':_("Please logout first"),
-			# FIXME: not match with error codes
-			'50':_("Cannot start No.38 timer"),
-			'51':_("Cannot stop No.38 timer"),
-			'52':_("Cannot start No.40 timer"),
-			'53':_("Cannot stop No.40 timer"),
-			'60':_("Unknown type of keep_alive packet"),
-		}
 
 	def listen(self):
 		# FIXME: cost much resource for Off-line State
@@ -461,7 +456,7 @@ class drcom_client():
 		except:
 			self.status= 'OFF'
 
-#		self.init_conf()
+		self.init_conf()
 		self.password_save()
 
 		# socket initialization
@@ -626,7 +621,13 @@ class drcom_client():
 					
 		err_num = '31'
 		self.exception(err_num)
+
+		# Warning: threads_enter/leave() must adds here while X.org upgrades to 7.5.0
+		# Otherwise, the whole Window will be frozen.
+		gtk.gdk.threads_enter()
 		self.tray.set_tooltip(_("Current State: Online"))
+		gtk.gdk.threads_leave()
+
 
 ## local addr config
 
@@ -648,11 +649,11 @@ class drcom_client():
 		## for test
 		# serv_ip -- binary, while server_ip -- decimal
 		self.serv_ip = socket.inet_aton(self.serv_addr[0])
-		self.show_hex(self.serv_ip)
-		self.show_hex(self.get_dns_addr()[0])
-		self.show_hex(self.host_ip)
+		#self.show_hex(self.serv_ip)
+		#self.show_hex(self.get_dns_addr()[0])
+		#self.show_hex(self.host_ip)
 		##
-		self.local_addr.append(self.serv_ip+'\x00'*3)
+		self.local_addr.append(self.serv_ip[0]+'\x00'*3)
 		self.local_addr.append('\xff'+'\x00'*3)
 
 	def handy_config(self):
@@ -683,11 +684,11 @@ class drcom_client():
 		## for test
 		# serv_ip -- binary, while server_ip -- decimal
 		self.serv_ip = socket.inet_aton(self.serv_addr[0])
-		self.show_hex(self.serv_ip)
-		self.show_hex(self.get_dns_addr()[0])
-		self.show_hex(self.host_ip)
+		#self.show_hex(self.serv_ip)
+		#self.show_hex(self.get_dns_addr()[0])
+		#self.show_hex(self.host_ip)
 		##
-		self.local_addr.append(self.serv_ip+'\x00'*3)
+		self.local_addr.append(self.serv_ip[0]+'\x00'*3)
 		self.local_addr.append('\xff'+'\x00'*3)
 
 ## auth_module start/stop
@@ -698,6 +699,7 @@ class drcom_client():
 		data = self.local_addr
 		fmt = '16s'+'i'+'4s'* num*2
 		param = struct.pack(fmt, self.ifname[:15], num, *data)
+		## FIXME: load drcom module first!
 		s.setsockopt(socket.IPPROTO_IP, 64+2048+64+1, param)
 		pid = os.getpid()
 		auto_logout = 0
@@ -778,7 +780,12 @@ class drcom_client():
 				# FIXME: what'up while failed to stop the module
 				pass
 
+		# Warning: threads_enter/leave() must adds here while X.org upgrades to 7.5.0
+		# Otherwise, the whole Window will be frozen.
+		gtk.gdk.threads_enter()
 		self.tray.set_tooltip(_("Current State: Offline"))
+		gtk.gdk.threads_leave()
+
 		time_usage=recv_data[8]+recv_data[7]+recv_data[6]+recv_data[5]
 		vol_usage=recv_data[12]+recv_data[11]+recv_data[10]+recv_data[9]
 		cash_usage = recv_data[16]+recv_data[15]+recv_data[14]+recv_data[13]
@@ -1561,7 +1568,12 @@ class drcom_client():
 	def quit_common(self):
 		self.status = 'OFF'
 		self.keep_live_count=0
+
+		# Warning: threads_enter/leave() must adds here while X.org upgrades to 7.5.0
+		# Otherwise, the whole Window will be frozen.
+		gtk.gdk.threads_enter()
 		self.tray.set_tooltip(_('Current State: Offline'))
+		gtk.gdk.threads_leave()
 		gtk.main()
 		
 	def quit(self,widget):
@@ -1574,6 +1586,8 @@ class drcom_client():
 
 	def exception(self,err_num):
 
+		# Warning: threads_enter/leave() must adds here while X.org upgrades to 7.5.0
+		# Otherwise, the whole Window will be frozen.
 		gtk.gdk.threads_enter()
 		if err_num == '31' or err_num == '32':
 			self.balloons(self.exception_id[err_num], self.info)

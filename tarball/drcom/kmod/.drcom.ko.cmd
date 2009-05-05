@@ -1,1 +1,0 @@
-cmd_/home/henry/repo/userspace-client-for-drcom/tarball/drcom/kmod/drcom.ko := ld -m elf_i386 -r -m elf_i386  --build-id -o /home/henry/repo/userspace-client-for-drcom/tarball/drcom/kmod/drcom.ko /home/henry/repo/userspace-client-for-drcom/tarball/drcom/kmod/drcom.o /home/henry/repo/userspace-client-for-drcom/tarball/drcom/kmod/drcom.mod.o
