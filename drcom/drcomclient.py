@@ -163,7 +163,7 @@ class drcom_client():
 
 
 	def read_conf(self):
-		self.init_conf()	
+		#self.init_conf()	
 		pathname=conf_path
 		if os.path.exists(pathname)==False:
 			os.mkdir(pathname)
@@ -456,7 +456,7 @@ class drcom_client():
 		except:
 			self.status= 'OFF'
 
-#		self.init_conf()
+		self.init_conf()
 		self.password_save()
 
 		# socket initialization
@@ -699,6 +699,7 @@ class drcom_client():
 		data = self.local_addr
 		fmt = '16s'+'i'+'4s'* num*2
 		param = struct.pack(fmt, self.ifname[:15], num, *data)
+		## FIXME: load drcom module first!
 		s.setsockopt(socket.IPPROTO_IP, 64+2048+64+1, param)
 		pid = os.getpid()
 		auto_logout = 0
