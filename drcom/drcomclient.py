@@ -200,7 +200,9 @@ class drcom_client():
 ##				mac_hex='\x01'*password_length
 ##				self.password=self.hex_xor(mac_hex,password_xor,password_length)
 				self.password=password_xor
-			self.show_hex(self.password)
+			## for test
+			#self.show_hex(self.password)
+			#
 			self.passwd_flag=True
 			return True
 
@@ -722,6 +724,9 @@ class drcom_client():
 				self.exception(err_num)
 				return False
 		except:
+			## no init_conf() --> listen thread could not run normally
+			self.init_conf()
+			##
 			err_num = '11'
 			self.exception(err_num)
 			return False
