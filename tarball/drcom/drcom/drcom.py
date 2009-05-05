@@ -15,10 +15,10 @@ import thread, Queue
 
 safe_send = thread.allocate_lock()
 dataQueue = Queue.Queue()
-IP_ADDR = 'localhost'
-#IP_ADDR = '202.1.1.1'
-PORT = 8080
-#PORT = 61440
+#IP_ADDR = 'localhost'
+IP_ADDR = '202.1.1.1'
+#PORT = 8080
+PORT = 61440
 
 ## global variables
 conf_name='drcom.conf'
