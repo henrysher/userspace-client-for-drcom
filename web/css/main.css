@@ -94,7 +94,7 @@ h1 + p, h2 + p, h3 + p, h4 + p, b + p {
     position: absolute;
     top: 10px;
     left: 5px;
-    background-image: url( ../images/drcomclient.png );
+    background-image: url( ../images/drcom.png );
     background-repeat: no-repeat;
     height: 150px;
     width: 150px;
@@ -157,26 +157,6 @@ a:hover{
 #navlist li a:hover, #navlist li a:active {
     text-decoration: underline;
 }
-/*
-#notice, #terms {
-    min-width: 0px;
-    padding: 0px;
-    margin: 30px 10px 10px -5px;
-    font-size: 9px;
-    line-height: 11px;
-    color: #aaa !important;
-}
-
-#notice a {
-    color: inherit !important;
-    text-decoration: none;
-}
-
-#notice a:hover {
-    color: #555 !important;
-    text-decoration: none;
-}
-*/
 
 dt { 
     font-weight: bold;
