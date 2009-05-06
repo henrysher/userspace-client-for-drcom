@@ -36,7 +36,7 @@
 var IS_PNG = /\.png$/i;
 var supported = /MSIE (5\.[5-9]|[6]\.[0-9]*)/.test(navigator.userAgent) && navigator.platform == 'Win32';
 var realSrc;
-var blankSrc = '/images/blank.png';
+var blankSrc = '../images/blank.png';
 if (supported) fixImage();
 function propertyChanged() {
   if (supported && event.propertyName == 'src') {

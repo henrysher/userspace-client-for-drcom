@@ -93,11 +93,11 @@ h1 + p, h2 + p, h3 + p, h4 + p, b + p {
 #icon {
     position: absolute;
     top: 10px;
-    left: 5px;
-    background-image: url( ../images/drcomclient.png );
+    left: -10px;
+    background-image: url( ../images/icon-gold.png );
     background-repeat: no-repeat;
-    height: 150px;
-    width: 150px;
+    height: 174px;
+    width: 215px;
     z-index: 3;
     margin: 0px;
 }
