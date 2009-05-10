@@ -401,7 +401,7 @@ class drcom_client():
 
 		elif self.status == 'OFF':
 			## for test
-#			self.show_hex(recv_data)
+			self.show_hex(recv_data)
 			##
 			# FIXME:!!No server_packet_id named '\x4d\x26\x6b' will occur errors!!
 			if recv_data [0:2] in self.server_packet_id:
@@ -418,7 +418,7 @@ class drcom_client():
 
 			## for test
 			#print len(recv_data)
-			#self.show_hex(recv_data)
+			self.show_hex(recv_data)
 			##
 
 			# FIXME:!!No server_packet_id named '\x4d\x26\x6b' will occur errors!!
@@ -525,24 +525,42 @@ class drcom_client():
 		host_dnsp=self.get_dns_addr()[0]
 		host_dnss=self.get_dns_addr()[1]
 
-		dhcp='\xff\xff\xff\xff'
+		## for u31 2227 build
+		dhcp='\x00'*4
+		## for u31 others
+#		dhcp='\xff\xff\xff\xff'
+		
 		host_unknown0='\x94'+'\x00'*3
 		os_major='\x05'+'\x00'*3
 		os_minor='\x01'+'\x00'*3
 		os_build='\x28\x0A'+'\x00'*2
 		host_unknown1='\x02'+'\x00'*3
 		kernel_version='\x00'*32  #in windows as servicepack[32]
+
+
+		## for u31 2227 build
+		## for u31 others
 		host_info=host_name+host_dnsp+dhcp+host_dnss+'\x00'*8+host_unknown0+\
 			os_major+os_minor+os_build+host_unknown1+kernel_version
 		zero3='\x00'*96
-		unknown='\x03\x00\x02\x0C'+'\x00\xF3\x31\x9F\x01\x00'
+
+		## for u31 2227 build
+		unknown='\x03\x00\x02\x0C'+'\x20\x02\x60\x1a\x00\x00'
+		## for u31 others
+#		unknown='\x03\x00\x02\x0C'+'\x00\xF3\x31\x9F\x01\x00'
+
 		auto_logout=0
 		multicast_mode=0
 		## for test: ip_dog = 0
 		self.ip_dog = 1
 		##
+
+		## for u31 2227 build
 		send_data=data_front+login_c_md5+chr(self.ip_dog)+'\x00'*4+host_info+zero3+\
-			unknown+self.mac_addr+chr(auto_logout)+chr(multicast_mode)
+			unknown+'\x00'*6+chr(auto_logout)+chr(multicast_mode)+'\xf9\xf7'
+		## for u31 others
+#		send_data=data_front+login_c_md5+chr(self.ip_dog)+'\x00'*4+host_info+zero3+\
+#			unknown+self.mac_addr+chr(auto_logout)+chr(multicast_mode)
 
 		## for test
 		#print len(send_data)
