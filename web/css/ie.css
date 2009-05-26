@@ -5,18 +5,18 @@
 
 #title h1 {
     background-image: none !important;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='../images/middle.png');
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='/web/images/middle.png');
     margin-right: 0px !important;
     padding-right: 15px !important;
 }
 
 #icon {
     background-image: none !important;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src='../images/drcom.png');
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src='/web/images/drcom.png');
 }
 
 #nav {
-    background-image: url( ../images/ie-nav.png ) !important;
+    background-image: url( /web/images/ie-nav.png ) !important;
 }
 
 #content ul {
@@ -29,9 +29,13 @@
 }
 
 #navlist .subtitle {
-    font-weight: normal !important;
+    font-weight: bold !important;
 }
 
+img { border:0; vertical-align: middle; }
+
+/*
 img {
     behavior: url( ../pngbehavior.htc );
 }
+*/

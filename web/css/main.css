@@ -1,4 +1,5 @@
 img { border:0; vertical-align: middle; }
+
 body {
     position: absolute;
     background-repeat: repeat-x;
@@ -12,11 +13,46 @@ body {
     max-width: 850px;
 }
 
-p {
-    min-width: 400px;    
+pre {
+	background:#79767B none repeat scroll 0 0;
+	color:#FFFFFF;
+	margin-bottom:1.5em;
+	padding:0.5em;
+    font-family: Courier, Fixed;
+	font-size:110%;
+}
+
+pre.doc {
+	background: none repeat scroll 0 0;
+	color:black;
+    font-family: Courier, Fixed;	
+	font-size:125%;
+}
+
+pre.code {
+	background: none repeat scroll 0 0;
+	color:red;
+	font-size:125%;
+}
+
+.help {
+	border-bottom:1px dashed #9999CC;
+	cursor:help;
+}
+
+table.center {
+	width:40%; 
+	margin-left:5%; 
+	margin-right:20%;
 }
 
 #download {
+    float: right;
+    padding: 5px 0px 5px 5px;
+    border: 0px;
+}
+
+#screenshot {
     float: right;
     padding: 5px 0px 5px 5px;
     border: 0px;
@@ -39,6 +75,13 @@ p {
 #footer {
 	clear:both;
 	text-align:center;
+}
+
+.windows-instructions {
+	background-color:white;	
+	border:1px solid black;
+	margin:1em 0;
+	padding:0 1em;
 }
 
 #title {
@@ -75,19 +118,24 @@ h2, h3, h4 {
 }
 
 h2 {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 h3 {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 h4 {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 h1 + p, h2 + p, h3 + p, h4 + p, b + p {
     margin-top: 2px;
+}
+
+p {
+	min-width: 400px;
+	font-size: 12px;
 }
 
 #icon {
@@ -134,7 +182,7 @@ a:hover{
     line-height: 17px;
 }
 
-#nav h2, #footer h2 {
+#nav h2 {
 	position: absolute;
 	left: -999px; width:990px;
 }
@@ -163,7 +211,7 @@ dt {
     margin-top: 1em;
 }
 
-.code, pre, tt, code {
+.code, tt, code {
     font-family: Courier, Fixed;
     font-size: 110%;
 }
