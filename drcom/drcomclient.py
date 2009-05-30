@@ -5,8 +5,9 @@
 ##
 ##         drcomclient.py
 ##
-## Copyright (c) 2009, Henry Huang <henry.s.huang@gmail.com>
-##					   Longshow <longshow@yeah.net>
+## Copyright (c) 2009, drcom-client Team
+## Author:		Henry Huang <henry.s.huang@gmail.com>
+##				Longshow <longshow@yeah.net>
 ##
 ## This program is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public
@@ -23,13 +24,28 @@
 ## Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ## Boston, MA 02111-1307, USA.
 
+## check Python Version
+import os, sys
+py_version = sys.version_info[1]
+kernel_version = os.uname()[2]
+
 ## import modules needed
-import pygtk
+try:
+	import gtk, pygtk
+except:
+	print "Please install python-gtk2 first before running drcom-client."
 pygtk.require('2.0')
-import gtk, pynotify
-import os, sys, time, atexit
+try:
+	import pynotify
+except:
+	print "Please install python-notify first before running drcom-client."
+import time, atexit
 import socket, fcntl, struct
-import hashlib, re, binascii
+if py_version == 6:
+	import hashlib
+else:
+	import md5
+import re, binascii
 from operator import xor
 import locale, gettext
 import thread, Queue
@@ -47,15 +63,16 @@ icon_path = '/usr/share/drcom/drcom.png'
 license_path ='/usr/share/drcom/COPYING'
 lang_path = '/usr/share/drcom/po/'
 type_path = os.path.join(conf_path, 'drcom_type')
-kv_O_path = '/usr/share/check/kernel_version'
-kv_N_path = '/proc/sys/kernel/osrelease'
-mod_path = '/etc/modules'
+#kv_O_path = '/usr/share/check/kernel_version'
+#kv_N_path = '/proc/sys/kernel/osrelease'
+mod_path = '/lib/modules/'+kernel_version+'/extra/drcom.ko'
 pid_file = 'drcom.pid'
 dataQueue = Queue.Queue()
+sys.path.append(conf_path)
 
-## Debug Option
-Debug = True
-if Debug == True:
+## Debug Option -- False, True, Local
+Debug = 'False'
+if Debug == 'Local':
 	IP_ADDR = '127.0.0.1'
 	PORT = 8080
 else:
@@ -78,8 +95,8 @@ gettext.textdomain(APP)
 lang = gettext.translation(APP, local_path, languages=langs, fallback = True)
 _ = lang.gettext
 
-
-class drcom_client():
+#class drcom_client():
+class drcom_client:
 	'''
 		This is the main class for Graphical User Interface and Dr.COM Protocol Implementation 
 	'''
@@ -116,7 +133,10 @@ class drcom_client():
 		'''
 			MD5 Calculation
 		'''
-		md5_temp = hashlib.md5()
+		if py_version == 6:
+			md5_temp = hashlib.md5()
+		else:
+			md5_temp = md5.new()
 		md5_temp.update(md5_content)
 		return md5_temp.digest()
 
@@ -186,9 +206,10 @@ class drcom_client():
 			'51':_("Fail to stop No.38 timer"),
 			'52':_("Fail to start No.40 timer"),
 			'53':_("Fail to stop No.40 timer"),
-			'54':_("Fail to start auth module"),
+			'54':_("Fail to start auth module,\nRUN \'sudo modprobe drcom\'"),
 			'55':_("Fail to stop auth module"),
-			'56':_("Run 'mkdrcom' under ROOT privilege"),
+			## FIXME: kdrcom is not a good name:(
+			'56':_("Cannot find drcom module,\nRUN \'sudo drcom setup\'"),
 			'60':_("Unknown type of keep_alive packet"),
 			'61':_("Update your client"),
 		}
@@ -238,37 +259,36 @@ class drcom_client():
 
 		self.timer_38 = 200
 		self.timer_40 = 160
-		self.module_auth = 'False'
+		self.module_auth = 'non-AUTH'
 
-	def kernel_version_check(self):
+	def kernel_module_check(self):
 		'''
-			Check whether the present kernel version matched
+			Check whether the kernel module drcom.ko exists
 		'''
-		try:
-			fd = file(type_path,'r')
-		except:
-			drcom_type = False
-		else:
+		flag = os.path.exists(type_path)
+		if flag == True:
+			fd = file(type_path, 'r')
 			drcom_type = fd.read()
 			fd.close()
-		try:
-			fd = file(kv_N_path,'r')
-		except:
-			new_version = os.popen("uname -r").read()
+			if drcom_type == 'AUTH':			
+				flag = os.path.exists(mod_path)
+				if flag == True:
+					return True
+				else:
+					err_num = '56' 
+					self.exception(err_num)
+					self.quit_common()
+			else:
+				## fake True!
+				return True
 		else:
-			new_version = fd.read()
-			fd.close()
-		try:
-			fd = file(kv_O_path,'r')
-		except:
-			old_version = ''
-		else:
-			old_version = fd.read()
-			fd.close()
-		if new_version > old_version and drcom_type == True:
-			err_num = '56'
-			self.exception(err_num)
-			self.quit_common()
+			flag = os.path.exists(mod_path)
+			if flag == True:
+				return True
+			else:
+				err_num = '56'
+				self.exception(err_num)
+				self.quit_common()
 
 	def get_ifname(self):
 		'''
@@ -409,7 +429,7 @@ class drcom_client():
 				self.password = password
 
 			## Debug Option
-			if Debug == True:
+			if Debug != 'False':
 				print 'Your password:'
 				self.show_hex(self.password)
 				print 'Your Server IP:'
@@ -437,7 +457,7 @@ class drcom_client():
 				pass
 			else:
 				## Debug Option
-				if Debug ==  True:
+				if Debug !=  'False':
 					print data
 
 				## GUI COMMAND				
@@ -529,7 +549,7 @@ class drcom_client():
 			Do the appropriate job according to the Packet ID
 		'''
 		## Debug Option
-		if Debug == True:
+		if Debug != 'False':
 			self.show_hex(recv_data)
 
 		## FIXME:!!No server_packet_id named '\x4d\x26\x6b' will occur errors!
@@ -595,14 +615,14 @@ class drcom_client():
 		self.init_conf()
 		self.server_ip_save()
 		self.password_save()
-		self.kernel_version_check()
+		self.kernel_module_check()
 
 		## socket initialization
 		self.drcom_sock=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 		self.drcom_sock.setblocking(0)
 
 		## Debug Option
-		if Debug == False:
+		if Debug != 'Local':
 
 			try:
 				## bind host_ip:port
@@ -749,11 +769,11 @@ class drcom_client():
 		if self.ip_dog == 1:
 			if recv_data[16+16+11] == '\x01':
 				## No need to start auth module
-				self.module_auth = 'False'
+				self.module_auth = 'non-AUTH'
 					
 			elif recv_data[16+16+11] == '\x00':
 				## automatical configuration and start auth module
-				self.module_auth = 'True'
+				self.module_auth = 'AUTH'
 				self.auto_config(recv_data[16+16+11:])
 				self.auth_module_start()
 
@@ -849,16 +869,19 @@ class drcom_client():
 		except:
 			err_num = '54'
 			self.exception(err_num)
+			self.quit_common()
 
 		## pass auth info then
 		pid = os.getpid()
 		auto_logout = 0
 		auth_cmd = struct.pack('iii16s', 1, pid, auto_logout, self.auth_info)
+
 		try:
 			s.setsockopt(socket.IPPROTO_IP, 64+2048+64, auth_cmd)
 		except:
 			err_num = '54'
 			self.exception(err_num)
+			self.quit_common()
 
 	def auth_module_stop(self):
 		'''
@@ -941,7 +964,7 @@ class drcom_client():
 		self.run_40_timer = 0
 
 		if self.ip_dog == 1:
-			if self.module_auth == 'True':
+			if self.module_auth == 'AUTH':
 					self.auth_module_stop()
 
 		## Warning: 
@@ -993,7 +1016,7 @@ class drcom_client():
 		self.drcom_sock.setblocking(0)
 
 		## Debug Option
-		if Debug == False:
+		if Debug != 'Local':
 			try:	
 				self.drcom_sock.bind((self.host_ip_dec,self.server_port))
 			except:
@@ -1086,7 +1109,7 @@ class drcom_client():
 			self.version = 3.7
 
 		## Debug Option
-		if Debug == True:
+		if Debug != 'False':
 			print 'keep_alive version =', self.version
 
 		## start _timer_40_
@@ -1737,6 +1760,9 @@ class drcom_client():
 		gtk.gdk.threads_enter()
 		self.tray.set_tooltip(_('Current State: Offline'))
 		gtk.gdk.threads_leave()
+
+		## FIXME: when serious errors happen,
+		## Here comes a bug-- if you Quit, it will cause thread-errors.
 		gtk.main()
 		
 	def quit(self,widget):
@@ -1801,6 +1827,7 @@ if __name__ == "__main__":
 	## one program is running...
 	if os.path.exists(os.path.join(conf_path,pid_file)):
 		p = findpid()
+		print "drcom-client has already started."
 		sys.exit(1)
 
 	drcom_client()
