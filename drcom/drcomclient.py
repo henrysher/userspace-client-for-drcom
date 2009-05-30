@@ -24,7 +24,7 @@
 ## Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ## Boston, MA 02111-1307, USA.
 
-## check Python Version
+## check OS/Python Version
 import os, sys
 py_version = sys.version_info[1]
 kernel_version = os.uname()[2]
@@ -58,13 +58,11 @@ except:
 conf_name = 'drcom.conf'
 addr_name = 'server_ip'
 conf_path = '/home/' + os.environ['USER'] + '/.drcom'
-sound_path = '/usr/share/drcom/drcom.wav'
-icon_path = '/usr/share/drcom/drcom.png'
+sound_path = '/usr/share/drcom/resource/drcom.wav'
+icon_path = '/usr/share/drcom/resource/drcom.png'
 license_path ='/usr/share/drcom/COPYING'
-lang_path = '/usr/share/drcom/po/'
+lang_path = '/usr/share/drcom/resource/po/'
 type_path = os.path.join(conf_path, 'drcom_type')
-#kv_O_path = '/usr/share/check/kernel_version'
-#kv_N_path = '/proc/sys/kernel/osrelease'
 mod_path = '/lib/modules/'+kernel_version+'/extra/drcom.ko'
 pid_file = 'drcom.pid'
 dataQueue = Queue.Queue()

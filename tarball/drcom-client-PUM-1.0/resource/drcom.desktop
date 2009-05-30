@@ -1,12 +1,12 @@
 [Desktop Entry]
 Version=1.0
 Encoding=UTF-8
-Name=Dr.COM Client
+Name=drcom-client
 Categories=Network;GTK;GNOME;
-GenericName=GUI drcom-client
-Comment= ISP Authentication
-Exec=/usr/bin/drcom
-Icon=/usr/share/drcom/drcom.png
+GenericName=drcom-client PUM
+Comment=ISP Authentication
+Exec=/usr/bin/drcomclient
+Icon=/usr/share/drcom/resource/drcom.png
 StartupNotify=true
 StartupWMClass=drcom
 Terminal=false

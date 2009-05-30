@@ -1,0 +1,75 @@
+#!/bin/sh
+##
+## drcom-client PUM v1.0, Python User Mode
+##
+##               mkdrcom
+## drcom-client module auto-compiling script
+## Copyright (c) 2009, drcom-client Team
+## Author:		Henry Huang <henry.s.huang@gmail.com>
+##
+## This program is free software; you can redistribute it and/or
+## modify it under the terms of the GNU General Public
+## License as published by the Free Software Foundation; either
+## version 2.1 of the License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+## General Public License for more details.
+#
+## You should have received a copy of the GNU General Public
+## License along with this program; if not, write to the
+## Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+## Boston, MA 02111-1307, USA.
+
+MODULE_NAME="drcom"
+INSTALL_DIR="/usr/share/drcom/src/kmod"
+LOG="/var/log/$MODULE_NAME-install.log"
+
+echo `date` `uname -r` >> $LOG 2>&1
+echo 'mkdrcom' >> $LOG 2>&1
+echo '----------------------------------' >> $LOG 2>&1
+
+if [ -f /etc/redhat-release ]; then
+	system=redhat
+elif [ -f /etc/debian_version ]; then
+	system=debian	
+elif [ -f /etc/SuSE-release ]; then
+	system=suse
+elif [ -f /etc/gentoo-release ]; then
+	system=gentoo
+elif [ -f /etc/arch-release ]; then
+	system=archlinux
+fi
+
+if ! [ -d /lib/modules/`uname -r`/build ]; then
+	if [ "$system" = "redhat" ] || [ "$system" = "suse" ]; then
+		echo "You should install kernel headers first."
+		echo "Do this in your terminal: "
+		echo "$ "
+		exit 0
+	elif [ "$system" = "debian" ]; then
+		echo "You should install kernel headers first."
+		echo "Do this in your terminal: "
+		echo "$ sudo apt-get install linux-headers-`uname -r`"
+		exit 0
+	elif [ "$system" = "gentoo" ]; then
+		echo "You should install kernel headers first."
+		echo "Do this in your terminal: "
+		echo "$"
+		exit 0
+	elif [ "$system" = "archlinux" ]; then
+		echo "You should install kernel headers first."
+		echo "Do this in your terminal: "
+		echo "$"
+		exit 0
+	else
+		echo "You should install kernel headers first."
+		exit 0
+	fi
+else
+	cd $INSTALL_DIR
+	make >> $LOG 2>&1
+	make install >> $LOG 2>&1
+fi
+exit 0

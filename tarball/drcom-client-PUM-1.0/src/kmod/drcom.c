@@ -1,5 +1,4 @@
 /*
-		i
  * (C) 2008 Zeng Zhaorong
  *
  * This program is free software; you can redistribute it and/or modify
@@ -62,7 +61,6 @@ enum tcp_state {
 #define MINS * 60 SECS
 #define HOURS * 60 MINS
 #define DAYS * 24 HOURS
-int n;
 
 static unsigned long tcp_timeouts[]
 = { 30 MINS,    /*      TCP_STATE_NONE, */
@@ -1080,36 +1078,21 @@ static int conn_set_params(struct sock *sk, int optname, void *optval, unsigned 
 		return -ENODEV;
 	}
 
-	{
-	char devname[IFNAMSIZ];
-	memcpy(devname, cp.devname, IFNAMSIZ);
-	devname[IFNAMSIZ-1] = '\0';
-	printk("<1> device=%s\n", devname);
-	}
-
 	write_lock_bh(&mode_lock);
 
 	tmp_addr = conn_e_addr;
 	conn_e_count = cp.e_count;
 	if (conn_e_count != 0) {
 		conn_e_addr = e_addr;
-		
-		for(i=0; i<conn_e_count; i++) {
-			printk("<1> except_addr %d \n", i+1);
-		    printk("<1> %d \n", (int) conn_e_addr[i].addr);
-			printk("<1> except_mask %d \n", i+1);
-			printk("<1> %d \n", (int) conn_e_addr[i].mask);
-			conn_e_addr[i].addr &= conn_e_addr[i].mask;
-		}
 
+		for(i=0; i<conn_e_count; i++) 
+			conn_e_addr[i].addr &= conn_e_addr[i].mask;
 	}
 
 	tmp_dev = track_dev;
 	track_dev = dev;
 
 	write_unlock_bh(&mode_lock);
-
-	printk("<1> conn_e_count=%d\n", conn_e_count);
 
 	if (tmp_addr)
 		kfree(tmp_addr);
@@ -1129,13 +1112,6 @@ static int conn_set_auth_cmd(struct sock *sk, int optname, void *optval, unsigne
 
 	if (copy_from_user(&cmd, optval, sizeof(struct conn_auth_cmd)))
 		return -EFAULT;
-
-	printk("<1> cmd=%d\n", cmd.cmd);
-	printk("<1> pid=%d\n", cmd.pid);
-	printk("<1> autologout=%d\n", cmd.autologout);
-	printk("<1> auth_data=\n");
-	for (n=0; n< 16;n++)
-		printk("<1> 0x%02x\n",(unsigned char)cmd.auth_data[n]);
 
 	rtnl_lock();
 
