@@ -69,6 +69,7 @@ if ! [ -d /lib/modules/`uname -r`/build ]; then
 	fi
 else
 	cd $INSTALL_DIR
+	make clean
 	make >> $LOG 2>&1
 	make install >> $LOG 2>&1
 fi

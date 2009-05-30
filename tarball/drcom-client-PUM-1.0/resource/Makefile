@@ -22,6 +22,7 @@
 ## Boston, MA 02111-1307, USA.
 
 RESOURCEDIR ?= /usr/share/drcom/resource/
+MO_DIR ?= /usr/share/drcom/resource/po/zh_CN/LC_MESSAGES/
 APPDIR ?= /usr/share/applications/
 
 all:
@@ -30,7 +31,8 @@ all:
 install:
 	@mkdir -p $(RESOURCEDIR)
 	@install -m 755 drcom.png drcom.wav $(RESOURCEDIR)
-	@install -d po/ $(RESOURCEDIR)
+	@mkdir -p $(MO_DIR)
+	@install -m 755 po/zh_CN/LC_MESSAGES/drcom.mo $(MO_DIR)
 	@mkdir -p $(APPDIR)
 	@install -m 755 drcom.desktop $(APPDIR)
 

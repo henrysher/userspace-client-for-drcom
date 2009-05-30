@@ -32,8 +32,6 @@ else
 
 KERNELDIR ?= /lib/modules/$(shell uname -r)/build
 PWD       := $(shell pwd)
-INSTALLDIR ?= /usr/share/drcom/src/kmod
-REMOVEDIR ?= /lib/modules/$(shell uname -r)/extra
 
 all: default
 
@@ -41,8 +39,6 @@ default:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
 
 install:
-	@mkdir -p $(INSTALLDIR)
-	@install -m 755 drcom.c daemon_kernel.h Makefile $(INSTALLDIR)
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules_install
 	/sbin/depmod -a $(shell uname -r)
 
@@ -54,5 +50,3 @@ clean:
 	@rm -rf *.markers *.order
 
 uninstall: clean
-	@rm -r $(INSTALLDIR)
-	@rm -r $(REMOVEDIR)/drcom.ko

@@ -2,9 +2,9 @@
 ## drcom-client PUM v1.0, Python User Mode
 ##
 ##               Makefile
-## 
+##
 ## Copyright (c) 2009, drcom-client Team
-## Author:		Henry Huang <henry.s.huang@gmail.com>
+##
 ##
 ## This program is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public
@@ -21,20 +21,32 @@
 ## Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ## Boston, MA 02111-1307, USA.
 
+BINDIR ?= /usr/bin/
+SRCDIR ?= /usr/share/drcom/src/python-user-mode/
+INSTALLDIR ?= /usr/share/drcom/src/kmod
+REMOVEDIR ?= /lib/modules/$(shell uname -r)/extra
 ## FIXME: archlinux not /etc/init.d/ but /etc/rc.d/
 INITDIR ?= /etc/init.d/
-BINDIR ?= /usr/bin/
 
 all:
 	@echo 
 
 install:
 	@mkdir -p $(INITDIR)
-	@install -m 755 drcom $(INITDIR)
+	@install -m 755 scripts/drcom $(INITDIR)
 	@mkdir -p $(BINDIR)
-	@install -m 755 runlevel drcom mkdrcom $(BINDIR)
+	@install -m 755 scripts/runlevel scripts/drcom scripts/mkdrcom $(BINDIR)
+	@mkdir -p $(BINDIR)
+	@install -m 755 python-user-mode/drcomclient $(BINDIR)
+	@mkdir -p $(SRCDIR)
+	@install -m 755 python-user-mode/drcomclient $(SRCDIR)
+	@mkdir -p $(INSTALLDIR)
+	@install -m 755 kmod/drcom.c kmod/daemon_kernel.h kmod/Makefile $(INSTALLDIR)
 
 uninstall:
+	@rm $(BINDIR)/drcomclient
+	@rm -r $(SRCDIR)
+	@rm -r $(INSTALLDIR)
+	@rm -r $(REMOVEDIR)/drcom.ko
 	@rm $(BINDIR)/runlevel $(BINDIR)/drcom $(BINDIR)/mkdrcom
 	@rm $(INITDIR)/drcom
-

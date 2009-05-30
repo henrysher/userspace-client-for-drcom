@@ -21,7 +21,7 @@
 ## Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ## Boston, MA 02111-1307, USA.
 
-SUBDIRS = src/kmod src/python-user-mode src/scripts resource 
+SUBDIRS = src resource 
 DIRS ?= /usr/share/drcom/
 
 .PHONY: all clean install
@@ -34,8 +34,9 @@ clean:
 
 install:
 	@for x in $(SUBDIRS); do (cd $$x && make install) || exit 1; done
+	@install -m 755 COPYING $(DIRS)
 	@runlevel add drcom
-	@drcom setup
+	@drcom start
 	@echo
 	@echo "Install drcom-client PUM successfully!"
 	@echo

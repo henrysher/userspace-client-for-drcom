@@ -203,26 +203,6 @@ stop()
     succ_msg
 }
 
-setup()
-{
-    if running $MODULE_NAME; then
-        if ! rmmod $MODULE_NAME 2>/dev/null; then
-            failure "Cannot unload module $MODULE_NAME"
-        fi
-    fi
-
-    if ! find /lib/modules/`uname -r`/extra -name "$MODULE_NAME.*" 2>/dev/null|grep -q $MODULE_NAME; then
-		begin_msg "Recompiling $MODULE_NAME kernel module."
-	    if ! $BUILDDRCOM >> $LOG 2>&1; then
-        	failure "Compile $MODULE_NAME failed. Look at $LOG to find out what went wrong"
-		fi
-	else
-		start
-		failure "$MODULE_NAME kernel module is latest now."
-	fi
-    start
-}
-
 status()
 {
 	if running $MODULE_NAME; then
@@ -246,14 +226,11 @@ force-reload)
 	stop
 	start
 	;;
-setup)
-	setup
-	;;
 status)
 	status
 	;;
 *)
-	echo "Usage: $0 {start|stop|restart|force-reload|status|setup}"
+	echo "Usage: $0 {start|stop|restart|force-reload|status}"
 	exit 1
 esac
 exit 0

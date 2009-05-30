@@ -11,3 +11,5 @@ StartupNotify=true
 StartupWMClass=drcom
 Terminal=false
 Type=Application
+Comment[zh]=Drcom 客户端
+
