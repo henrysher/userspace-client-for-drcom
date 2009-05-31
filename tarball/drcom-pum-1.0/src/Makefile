@@ -41,15 +41,15 @@ install:
 	@mkdir -p $(SRCDIR)
 	@install -m 755 python-user-mode/drcomclient $(SRCDIR)
 	@mkdir -p $(INSTALLDIR)
-	@install -m 755 kmod/drcom.c kmod/daemon_kernel.h kmod/Makefile $(INSTALLDIR)
+	@install -m 644 kmod/drcom.c kmod/daemon_kernel.h kmod/Makefile $(INSTALLDIR)
 
 clean:
 	@echo
 
 uninstall:
-	@rm $(BINDIR)/drcomclient
-	@rm -r $(SRCDIR)
-	@rm -r $(INSTALLDIR)
-	@rm -r $(REMOVEDIR)/drcom.ko
-	@rm $(BINDIR)/drunlevel $(BINDIR)/drcom $(BINDIR)/mkdrcom
-	@rm $(INITDIR)/drcom
+	@rm -f $(BINDIR)/drcomclient
+	@rm -rf $(SRCDIR)
+	@rm -rf $(INSTALLDIR)
+	@rm -rf $(REMOVEDIR)/drcom.ko
+	@rm -f $(BINDIR)/drunlevel $(BINDIR)/drcom $(BINDIR)/mkdrcom
+	@rm -f $(INITDIR)/drcom

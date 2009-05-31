@@ -33,9 +33,7 @@ clean:
 	@for x in $(SUBDIRS); do (cd $$x && make clean) || exit 1; done
 
 install:
-	@rm -rf $(DIRS)
 	@for x in $(SUBDIRS); do (cd $$x && make install) || exit 1; done
-	@install -m 755 COPYING $(DIRS)
 	@drunlevel add drcom
 	@drcom start
 	@echo
@@ -46,7 +44,7 @@ uninstall:
 	@drcom stop
 	@drunlevel del drcom
 	@for x in $(SUBDIRS); do (cd $$x && make uninstall) || exit 1; done
-	@rm -r $(DIRS)
+	@rm -rf $(DIRS)
 	@echo 
 	@echo "Uninstall drcom-client PUM successfully!"
 	@echo

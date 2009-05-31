@@ -30,16 +30,16 @@ all:
 
 install:
 	@mkdir -p $(RESOURCEDIR)
-	@install -m 755 drcom.png drcom.wav $(RESOURCEDIR)
+	@install -m 644 COPYING drcom.png drcom.wav $(RESOURCEDIR)
 	@mkdir -p $(MO_DIR)
-	@install -m 755 po/zh_CN/LC_MESSAGES/drcom.mo $(MO_DIR)
+	@install -m 644 po/zh_CN/LC_MESSAGES/drcom.mo $(MO_DIR)
 	@mkdir -p $(APPDIR)
-	@install -m 755 drcom.desktop $(APPDIR)
+	@install -m 644 drcom.desktop $(APPDIR)
 
 clean:
 	@echo
 
 uninstall:
-	@rm -r $(RESOURCEDIR)
-	@rm $(APPDIR)/drcom.desktop
+	@rm -rf $(RESOURCEDIR)
+	@rm -f $(APPDIR)/drcom.desktop
 
