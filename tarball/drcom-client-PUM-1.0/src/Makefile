@@ -35,7 +35,7 @@ install:
 	@mkdir -p $(INITDIR)
 	@install -m 755 scripts/drcom $(INITDIR)
 	@mkdir -p $(BINDIR)
-	@install -m 755 scripts/runlevel scripts/drcom scripts/mkdrcom $(BINDIR)
+	@install -m 755 scripts/drunlevel scripts/drcom scripts/mkdrcom $(BINDIR)
 	@mkdir -p $(BINDIR)
 	@install -m 755 python-user-mode/drcomclient $(BINDIR)
 	@mkdir -p $(SRCDIR)
@@ -48,5 +48,5 @@ uninstall:
 	@rm -r $(SRCDIR)
 	@rm -r $(INSTALLDIR)
 	@rm -r $(REMOVEDIR)/drcom.ko
-	@rm $(BINDIR)/runlevel $(BINDIR)/drcom $(BINDIR)/mkdrcom
+	@rm $(BINDIR)/drunlevel $(BINDIR)/drcom $(BINDIR)/mkdrcom
 	@rm $(INITDIR)/drcom

@@ -66,14 +66,16 @@ p { margin: 0px 0px 4px 0px; }
 <h2>Tutorials</h2>
 <div class="windows-instructions">
 <h3>Now available for drcom-client PUM v1.0</h3>
+<p>Linux Distro used here -- <b>Ubuntu 9.04 (Jaunty)</b></p>
 <br>
-<p><b>[<a href="#Install">Install drcom-client</a>
+<p><b>[<a href="#Install">Install</a>
 | <a href="#Run">Run</a>
 | <a href="#Login">Login</a>
 | <a href="#Status">Check Status</a>
 | <a href="#Logout">Logout</a>
-| <a href="#Error">Handle Error</a>
-| <a href="#Uninstall">Uninstall</a>]
+| <a href="#Passwd">Password</a>
+| <a href="#Uninstall">Uninstall</a>
+| <a href="#Error">Handle Error</a>]
 </b></p>
 
 <h3><a name="Install"></a>Install drcom-client</h3>
@@ -83,10 +85,11 @@ p { margin: 0px 0px 4px 0px; }
 <li><b>Download the latest source tarball</b></li>
 <p>You can find the latest source tarball <a href="../downloads/linux.html">here</a>.</p>
 <li><b>Compile source code and Install in the system</b></li>
-<p>Suppose that you have downloaded the source tarball named drcom-client-PUM-1.0.tar.gz</p>
+<p>Suppose that you have downloaded the source tarball named</p>
+<p><b>drcom-client-PUM-1.0.tar.gz</b></p>
 <pre>
 $ tar zxvf drcom-client-PUM-1.0.tar.gz
-$ cd drcom
+$ cd drcom-client-PUM-1.0/
 $ make & sudo make install
 </pre>
 </ol>
@@ -106,24 +109,111 @@ $ sudo rpm -i drcom-client-PUM-1.0.rpm
 </ol>
 
 <h3><a name="Run"></a>Run</h3>
-
-
+<br>
+<p>If you use GNOME as default Desktop, you will find drcom-client launcher in <b>Applications->Internet</b>.</p>
+<img src="../images/launcher.png" />
+<dl>
+<dt>Note:</dt>
+<dd>If you try to <b>DEBUG</b> drcom-client program, you could type <b>drcomclient</b> command in your terminal.</dd>
+</dl>
 <h3><a name="Login"></a>Login</h3>
+<br>
+<p>It is very convenient to login/logout with the help of friendly GUI in drcom-client PUM.</p>
+<p>This is the login window of drcom-client PUM.</p>
+<p><b>Left-Click "LOGIN" button</b>.</p>
+<img src="../images/login_window.png" />
+<h4><b> OR </b> </h4>
+<p>You could <b>Right-Click System Tray <img src="../images/tray.png"/></b> in the upside panel,</p>
+<p>and then <b>Left-Click "CONNECT" menu item</b>.</p>
+<p><img src="../images/menu.png" /></p>
+<br>
+<p>When you login successfully, system balloon will display like:</p>
+<p><img src="../images/login_success.png" /></p>
+<br>
 
 <h3><a name="Status"></a>Check Status</h3>
+<br>
+<p>It is common for users to come across the situation that they could not confirm whether drcom-client is on-line or off-line at present.</p>
+<p>We add the status check function for those users.</p>
+<p>Move <b>MOUSE</b> to the System Tray <img src="../images/tray.png" />, and it will display like:</p>
+<br>
+<p>When drcom-client is <b>on-line</b></p>
+<p><img src="../images/status_on.png" /></p>
+<br>
+<p>When drcom-client is <b>off-line</b></p>
+<p><img src="../images/status_off.png" /></p>
+<br>
 
 <h3><a name="Logout"></a>Logout</h3>
+<br>
+<p>It is quite similar to login the drcom-client.</p>
+<p>You could Left-Click "LOGOUT" button in the login window, or Left-Click "DISCONNECT" item in the menu list.</p>
+<p>When you logout successfully, system balloon will display like:</p>
+<p><img src="../images/logout_success.png" /></p>
+<br>
+
+<h3><a name="Passwd"></a>Change Password</h3>
+<br>
+<p>If you want to change the password, you could <b>Right-Click</b> the System Tray and choose the <b>PassWord</b> in menu list.</p>
+<p><img src="../images/menu.png" /></p>
+<br>
+<p>Then you <b>Left-Click</b> the PassWord item, it will display like:</p>
+<p><img src="../images/passwd.png" /></p>
+<br>
+<dl>
+<dt>Note:</dt>
+<dd>You could not change your password while the drcom-client is on-line (already log in).</dd>
+</dl>
+<br>
+
+<h3><a name="Uninstall"></a>Uninstall</h3>
+<br>
+<p>Uninstall the drcom-client PUM is similar to installation.</p>
+<ol type="A">
+<li><h4>Source Code Uninstallation</h4></li>
+<ol>
+<p>It will easy when you have kept the source tarball after the installation.</p>
+<p>If not, you can download source tarball <a href="../downloads/linux.html">here</a>.</p>
+<p>Before you download, make sure the version of source tarball is matched to the drcom-client installed in your system.</p>
+<br>
+<p>Suppose that you have kept the source tarball named</p>
+<p><b>drcom-client-PUM-1.0.tar.gz</b></p>
+<pre>
+$ tar zxvf drcom-client-PUM-1.0.tar.gz
+$ cd drcom-client-PUM-1.0/
+$ sudo make uninstall
+</pre>
+</ol>
+
+<li><h4>Binary Package Uninstallation</h4></li>
+<ul>
+<li><b>Ubuntu/Debian Package (.deb)</b></li>
+<pre>
+$ sudo dpkg -r drcom-client-PUM-1.0.deb
+</pre>
+<li><b>Fedora Package (.rpm)</b></li>
+<pre>
+$ sudo rpm -r drcom-client-PUM-1.0.rpm
+</pre>
+</ul>
+
+</ol>
+
 
 <h3><a name="Error"></a>Handle Error</h3>
+<br>
+<p>drcom-client PUM could handle non-serious exceptions by itself.</p>
+<p>
 
 
-<p><b>[<a href="#Install">Install drcom-client</a>
+<p><b>[<a href="#Install">Install</a>
 | <a href="#Run">Run</a>
 | <a href="#Login">Login</a>
 | <a href="#Status">Check Status</a>
 | <a href="#Logout">Logout</a>
-| <a href="#Error">Handle Error</a>
-| <a href="#Uninstall">Uninstall</a>]
+| <a href="#Passwd">Password</a>
+| <a href="#Uninstall">Uninstall</a>
+| <a href="#Error">Handle Error</a>]
 </b></p>
 
 </div>

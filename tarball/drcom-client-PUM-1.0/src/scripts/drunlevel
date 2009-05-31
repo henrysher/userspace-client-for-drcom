@@ -2,7 +2,7 @@
 ##
 ## drcom-client PUM v1.0, Python User Mode
 ##
-##               runlevel
+##               drunlevel
 ## install init script for drcom kernel module loaded at boot-up
 ##
 ## Copyright (c) 2009, drcom-client Team

@@ -69,7 +69,17 @@ if ! [ -d /lib/modules/`uname -r`/build ]; then
 	fi
 else
 	cd $INSTALL_DIR
-	make >> $LOG 2>&1
-	make install >> $LOG 2>&1
+	make clean
+	echo "Compiling drcom kernel module"
+	echo "Wait for a moment..."
+	if ! make >> $LOG 2>&1; then
+		echo "Compil drcom kernel module failed..."
+		exit 0
+	fi
+	if ! make install >> $LOG 2>&1; then
+		echo "Install drcom kernel module failed..."
+		exit 0
+	fi
+	echo "Install drcom kernel module successfully!"
 fi
 exit 0
