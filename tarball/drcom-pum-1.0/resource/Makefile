@@ -1,5 +1,5 @@
 ##
-## drcom-client
+## drcom-client PUM v1.0, Python User Mode
 ##
 ##               Makefile
 ##
@@ -21,32 +21,25 @@
 ## Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ## Boston, MA 02111-1307, USA.
 
-SUBDIRS = src resource 
-DIRS ?= /usr/share/drcom/
-
-.PHONY: all clean install
+RESOURCEDIR ?= $(DESTDIR)/usr/share/drcom/resource/
+MO_DIR ?= $(DESTDIR)/usr/share/drcom/resource/po/zh_CN/LC_MESSAGES/
+APPDIR ?= $(DESTDIR)/usr/share/applications/
 
 all:
-	@for x in $(SUBDIRS); do (cd $$x && make all) || exit 1; done
-
-clean:
-	@for x in $(SUBDIRS); do (cd $$x && make clean) || exit 1; done
+	@echo 
 
 install:
-	@rm -rf $(DIRS)
-	@for x in $(SUBDIRS); do (cd $$x && make install) || exit 1; done
-	@install -m 755 COPYING $(DIRS)
-	@drunlevel add drcom
-	@drcom start
-	@echo
-	@echo "Install drcom-client PUM successfully!"
+	@mkdir -p $(RESOURCEDIR)
+	@install -m 755 drcom.png drcom.wav $(RESOURCEDIR)
+	@mkdir -p $(MO_DIR)
+	@install -m 755 po/zh_CN/LC_MESSAGES/drcom.mo $(MO_DIR)
+	@mkdir -p $(APPDIR)
+	@install -m 755 drcom.desktop $(APPDIR)
+
+clean:
 	@echo
 
 uninstall:
-	@drcom stop
-	@drunlevel del drcom
-	@for x in $(SUBDIRS); do (cd $$x && make uninstall) || exit 1; done
-	@rm -r $(DIRS)
-	@echo 
-	@echo "Uninstall drcom-client PUM successfully!"
-	@echo
+	@rm -r $(RESOURCEDIR)
+	@rm $(APPDIR)/drcom.desktop
+

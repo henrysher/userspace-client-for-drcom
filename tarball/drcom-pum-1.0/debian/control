@@ -1,0 +1,24 @@
+Source: drcom-pum
+Section: main
+Priority: optional
+Maintainer: Henry Huang <henry.s.huang@gmail.com>
+Build-Depends: debhelper (>= 7), linux-headers-generic
+Standards-Version: 3.8.0
+Homepage: http://www.drcom-client.org/
+
+Package: drcom-pum
+Architecture: all
+Depends: python (>= 2.4), python-gtk2 (>= 2.12), 
+         python-notify, linux-headers(>= 2.24)
+Recommends: gcc, make
+Conflicts: python3 (>= 3.0)
+Description: fully GUI configurable X drcom-client using GTK+
+ drcom-client is an open source ISP client for Dr.COM networks, used in 
+ many universities in China.
+ .
+ drcom-client pum is a branch of drcom-client for linux development.
+ It is a fully GUI configurable X drcom-client for Linux, written from
+ scratch in pure Python. It uses the GTK+ toolkit for all of its 
+ interface needs. drcom-client pum provides 100% GUI configurability; 
+ no need to edit config files by hand and re-start the program. 
+

@@ -21,12 +21,12 @@
 ## Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ## Boston, MA 02111-1307, USA.
 
-BINDIR ?= /usr/bin/
-SRCDIR ?= /usr/share/drcom/src/python-user-mode/
-INSTALLDIR ?= /usr/share/drcom/src/kmod
-REMOVEDIR ?= /lib/modules/$(shell uname -r)/extra
+BINDIR ?= $(DESTDIR)/usr/bin/
+SRCDIR ?= $(DESTDIR)/usr/share/drcom/src/python-user-mode/
+INSTALLDIR ?= $(DESTDIR)/usr/share/drcom/src/kmod
+REMOVEDIR ?= $(DESTDIR)/lib/modules/$(shell uname -r)/extra
 ## FIXME: archlinux not /etc/init.d/ but /etc/rc.d/
-INITDIR ?= /etc/init.d/
+INITDIR ?= $(DESTDIR)/etc/init.d/
 
 all:
 	@echo 
@@ -42,6 +42,9 @@ install:
 	@install -m 755 python-user-mode/drcomclient $(SRCDIR)
 	@mkdir -p $(INSTALLDIR)
 	@install -m 755 kmod/drcom.c kmod/daemon_kernel.h kmod/Makefile $(INSTALLDIR)
+
+clean:
+	@echo
 
 uninstall:
 	@rm $(BINDIR)/drcomclient
