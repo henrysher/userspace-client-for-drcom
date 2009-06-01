@@ -1570,16 +1570,16 @@ class drcom_client:
 		'''
 			Save Server IP address
 		'''
-		server_ip = self.serveripbox.get_text()
+		self.server_ip = self.serveripbox.get_text()
 
-		if len(server_ip) == 0:
+		if len(self.server_ip) == 0:
 			pass
 		## prevent the input of RETURN character
-		elif server_ip[len(server_ip)-1] == '\x0a':
-			server_ip = server_ip[:len(server_ip)-1]
+		elif self.server_ip[len(self.server_ip)-1] == '\x0a':
+			self.server_ip = server_ip[:len(self.server_ip)-1]
 
 		f=file(os.path.join(conf_path,addr_name),'w')
-		f.write(server_ip)
+		f.write(self.server_ip)
 		f.close()
 
 	def password_save(self):
