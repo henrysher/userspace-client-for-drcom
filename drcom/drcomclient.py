@@ -59,6 +59,7 @@ except:
 ## global variables
 conf_name = 'drcom.conf'
 addr_name = 'server_ip'
+user_path = '/home/' + os.environ['USER']
 conf_path = '/home/' + os.environ['USER'] + '/.drcom'
 sound_path = '/usr/share/drcom/resource/drcom.wav'
 icon_path = '/usr/share/drcom/resource/drcom.png'
@@ -389,7 +390,12 @@ class drcom_client:
 		## Or create a new one
 		pathname = conf_path
 		if os.path.exists(pathname) == False:
-			os.mkdir(pathname)
+			try:
+				os.mkdir(pathname)
+			except:
+				## ROOT user has no /home/root in Fedora
+				os.mkdir(user_path)
+				os.mkdir(pathname)
 		
 		## Read server_ip.conf, and acquire server_ip
 		file_path = os.path.join(pathname,addr_name)

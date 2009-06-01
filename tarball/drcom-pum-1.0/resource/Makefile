@@ -21,12 +21,17 @@
 ## Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ## Boston, MA 02111-1307, USA.
 
-RESOURCEDIR ?= $(DESTDIR)/usr/share/drcom/resource/
-MO_DIR ?= $(DESTDIR)/usr/share/drcom/resource/po/zh_CN/LC_MESSAGES/
-APPDIR ?= $(DESTDIR)/usr/share/applications/
+RESOURCEDIR ?= $(DESTDIR)/usr/share/drcom/resource
+MO_DIR ?= $(DESTDIR)/usr/share/drcom/resource/po/zh_CN/LC_MESSAGES
+APPDIR ?= $(DESTDIR)/usr/share/applications
+
+.PHONY: all clean install uninstall
 
 all:
-	@echo 
+
+clean:
+	@rm -rf $(RESOURCEDIR)
+	@rm -f $(APPDIR)/drcom.desktop
 
 install:
 	@mkdir -p $(RESOURCEDIR)
@@ -36,10 +41,4 @@ install:
 	@mkdir -p $(APPDIR)
 	@install -m 644 drcom.desktop $(APPDIR)
 
-clean:
-	@echo
-
-uninstall:
-	@rm -rf $(RESOURCEDIR)
-	@rm -f $(APPDIR)/drcom.desktop
-
+uninstall:	clean

@@ -32,7 +32,6 @@ clean:
 
 	# Add here commands to clean up after the build process.
 	$(MAKE) clean
-	# $(MAKE) uninstall
 
 	dh_clean 
 
@@ -64,7 +63,7 @@ binary-arch: install
 #	dh_installpam
 #	dh_installmime
 #	dh_python
-#	dh_installinit
+#	dh_installinit --name=drcom
 #	dh_installcron
 #	dh_installinfo
 #	dh_installman

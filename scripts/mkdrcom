@@ -24,7 +24,12 @@
 
 MODULE_NAME="drcom"
 INSTALL_DIR="/usr/share/drcom/src/kmod"
+MAKE_DIR="/tmp/$MODULE_NAME"
 LOG="/var/log/$MODULE_NAME-install.log"
+
+mkdir -p $MAKE_DIR
+rm -rf $MAKE_DIR/*
+cp $INSTALL_DIR/* $MAKE_DIR/
 
 echo `date` `uname -r` >> $LOG 2>&1
 echo 'mkdrcom' >> $LOG 2>&1
@@ -68,7 +73,7 @@ if ! [ -d /lib/modules/`uname -r`/build ]; then
 		exit 0
 	fi
 else
-	cd $INSTALL_DIR
+	cd $MAKE_DIR
 	make clean
 	echo "Compiling drcom kernel module"
 	echo "Wait for a moment..."
