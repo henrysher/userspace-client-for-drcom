@@ -74,7 +74,6 @@ p { margin: 0px 0px 4px 0px; }
     <li><a href="#What">What is drcom-client?</a></li>
 	<li><a href="#Adware">Does drcom-client contain any spyware or adware?</a></li>
     <li><a href="#Where">Where do I get it?</a></li>
-    <li><a href="#Name">drcom-client is not a good name. Why can't you change it?</a></li>
 	<li><a href="#PUM">How does drcom-client PUM come?</a></li>
 	<li><a href="#Release">When will the next drcom-client version be released?</a></li>
 	<li><a href="#Future">What does the future hold?</a></li>
@@ -107,7 +106,7 @@ p { margin: 0px 0px 4px 0px; }
   <li><a href="#USE">Using drcom-client</a>
   <ol>
 	<!-- Troubleshooting -->
-	<li><a href="#client_error">What should I do when drcom-client gives me error information?</a></li>
+	<li><a href="#client_error">What should I do when drcom-client PUM gives me error information?</a></li>
 	<li><a href="#Kernel">drcom-client can not work after updating Linux kernel.</a></li>
 	<li><a href="#Resource">How to solve "Fatal IO error 11 (Resource temporarily unavailable) on X server"</a></li>
 	<li><a href="#socket_error">What should I do when "socket.error: [Errno 92] unavailable protocols"</a></li>
@@ -135,9 +134,6 @@ p { margin: 0px 0px 4px 0px; }
     <h4 id="Where">Where do I get it?</h4>
 <p>You can follow links to <a href="../downloads/linux.html">GNU/Linux</a>, <a href="../downloads/windows.html">Microsoft Windows</a> and <a href="../downloads/macosx.html">Apple Mac OS X</a> for the latest binaries. Of course, this is <a href="http://www.gnu.org/philosophy/free-sw.html">free software</a> so the source code is available to, along with instruction on how to compile it.</p>
 
-    <h4 id="Name">drcom-client is not a good name. Why can't you change it?</h4>
-<p>drcom-client may not be comfortable with its name while it might conflict with Dr.COM&reg; owned by Doctorcom Corp.</p>
-
 	<h4 id="PUM">How does drcom-client PUM come?</h4>
 <p><a href="../wiki/">drcom-client PUM</a> is a branch of drcom-client for linux development. This project's forcus is to create an easily configurable user-mode client with a friendly Graphical User Interface. PUM is the abbreviation of Python User Mode. As python is a powerful tool for protype design, we choose it as the main language of this project. Recently we have drcom-client PUM v1.0 released. </p>
 
@@ -148,7 +144,7 @@ p { margin: 0px 0px 4px 0px; }
 <p>See our <a href="../docs/goals.html">project goals</a>.</p>
 
 	<h4 id="Website">This website is awesome, why can't you change it?</h4>
-<p>Sorry for that. If you could help us, we will appreciate your kindness. For more information, see <a href="web-develop.html">Web development</a>.</p>
+<p>Sorry for that. If you could help us, we will appreciate your kindness. For more information, see <a href="../docs/web-develop.html">Web development</a>.</p>
 
 <h3 id="INSTALL">Installing drcom-client</h3>
 
@@ -167,7 +163,7 @@ p { margin: 0px 0px 4px 0px; }
    	<h4 id="64-bit">Can drcom-client run on 64-bit systems?</h4>
 <p>There is no 64-bit version of drcom-client now, but in principle it should run on 64-bit systems.</p>
 
-	<h4 id="Mobile">Can drcom-client run on mobile platform or embedded platform</h4>
+	<h4 id="Mobile">Can drcom-client run on mobile platform or embedded platform?</h4>
 <p>Not yet. We will strive to support drcom-client on mobile platform or embedded platform. Please wait.</p>
 
 	<h4 id="Package">Does drcom-client have any .deb or .rpm packages?</h4>
@@ -177,10 +173,10 @@ p { margin: 0px 0px 4px 0px; }
 <p>Not yet. We will soon support non-GNOME desktop.</p>
 
 	<h4 id="Compile">I have the source; how do I build this thing?</h4>
-<p>Assuming all of the necessary dependence satisfied ("sudo apt-get install python-gtk2" if you use drcom-client PUM), you compile drcom-client for linux like most applications:
+<p>Assuming all of the necessary dependence satisfied ("sudo apt-get install python-gtk2 python-notify" if you use drcom-client PUM), you compile drcom-client for linux like most applications:
 <pre>
-$ tar xjvf drcom-client-1.x.y.tar.bz2
-$ cd drcom-client-1.x.y
+$ tar xjvf drcom-1.x.y.tar.bz2
+$ cd drcom-1.x.y
 $ make && sudo make install
 </pre>
 <!--
@@ -202,11 +198,16 @@ If you are trying to compile on Windows or Mac OS X, you need the answer to a di
 <p>We have a whole ERROR table for drcom-client PUM.</p>
 
 	<h4 id="Kernel">drcom-client can not work after updating Linux kernel.</h4>
-<p>You should run the "mkdrcom" command in your terminal when you use drcom-client PUM. If you see "Load new drcom module successfully..." in the end, it means everything has become normal. Or you should compile drcom authentication module by yourselve.
+<p>You should run the "sudo drcom start" command in your terminal when you use drcom-client PUM. If you see this in the end,
+<pre>
+* Starting drcom kernel module. 
+*  done.
+</pre>
+it means everything has become normal. Or you should compile drcom authentication module by yourselve.
 Suppose that you have kept the source code of drcom-client for Linux named drcom-client-1.x.y.tar.bz2. Then do as follows:
 <pre>
-$ tar xjvf drcom-client-1.x.y.tar.bz2
-$ cd drcom-client-1.x.y/kmod
+$ tar xjvf drcom-1.x.y.tar.bz2
+$ cd drcom-1.x.y/src/kmod
 $ make & sudo make install
 </pre>
 </p>
@@ -217,13 +218,13 @@ $ make & sudo make install
 	<h4 id="socket_error">What should I do when "socket.error: [Errno 92] unavailable protocols"</h4>
 <p>It means you have not loaded drcom authentication module.
 <pre>
-$ sudo modprobe drcom
+$ sudo drcom start
 </pre>
 </p>
 
     <h4 id="Requests">How should I make feature requests?</h4>
-<p>The first thing to do is see if your request has already been made. It probably has; we get a lot of feature requests. Check the <a href="http://groups.google.com/group/drcom-client-user"> User List and developer <a href="http://groups.google.com/group/drcom-client">Mailing List</a> archives. If you find a discussion that seems relevant, feel free to add your two penneth.</p>
-<p>If you are making a new feature request, please make it to the <a href="http://groups.google.com/group/drcom-client-user">User List or <a href="http://groups.google.com/group/drcom-client">Mailing List</a> first. Think about what it is you are trying to achieve with your request and not about what the underlying procedure is. Once we understand what the request is for, we may find that we can do it better, or that the way it works isn't suitable for drcom-client's interface, or that drcom-client already supports the feature, but in a different way.</p>
+<p>The first thing to do is see if your request has already been made. It probably has; we get a lot of feature requests. Check the <a href="http://groups.google.com/group/drcom-client-user"> User List</a> and developer <a href="http://groups.google.com/group/drcom-client">Mailing List</a> archives. If you find a discussion that seems relevant, feel free to add your two penneth.</p>
+<p>If you are making a new feature request, please make it to the <a href="http://groups.google.com/group/drcom-client-user">User List</a> or <a href="http://groups.google.com/group/drcom-client">Mailing List</a> first. Think about what it is you are trying to achieve with your request and not about what the underlying procedure is. Once we understand what the request is for, we may find that we can do it better, or that the way it works isn't suitable for drcom-client's interface, or that drcom-client already supports the feature, but in a different way.</p>
 <p>Once the feature has been discussed on the mailing list, a bug report should be opened so that record can be kept on its progress.</p>
 
     <h4 id="Manual">Is there a user manual?</h4>
