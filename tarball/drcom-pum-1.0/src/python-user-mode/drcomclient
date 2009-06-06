@@ -41,7 +41,7 @@ try:
 except:
 	print "Please install python-notify first before running drcom-client."
 	sys.exit(0)
-import time, atexit
+import time, atexit, errno
 import socket, fcntl, struct
 if py_version == 6:
 	import hashlib
@@ -1809,6 +1809,18 @@ def main():
 ##----------------------------
 if __name__ == "__main__":
 
+	## one program is running...
+	if os.path.exists(os.path.join(conf_path,pid_file)):
+		p = findpid()
+		try:
+			os.kill(p, 0)
+		except os.error, detail:
+			if detail.errno == errno.ESRCH:
+				print "Stale pid_file exists.  removing it."
+				os.unlink(os.path.join(conf_path,pid_file))
+		else:
+			raise SystemExit, "drcom-client has already started."
+
 	## create a daemon process
 	try:
 		pid = os.fork()
@@ -1828,12 +1840,6 @@ if __name__ == "__main__":
 			sys.exit(0)
 	except OSError, e:
 		print >>sys.stderr, "fork #2 failed: %d (%s)" % (e.errno, e.strerror)
-		sys.exit(1)
-
-	## one program is running...
-	if os.path.exists(os.path.join(conf_path,pid_file)):
-		p = findpid()
-		print "drcom-client has already started."
 		sys.exit(1)
 
 	drcom_client()
