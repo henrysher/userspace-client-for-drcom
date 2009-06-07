@@ -1,0 +1,236 @@
+#! /bin/sh
+##
+## drcom-client PUM v1.0, Python User Mode
+##
+##               drcom
+## drcom-client kernel module init script
+##
+## Copyright (c) 2009, drcom-client Team
+## Author:		Henry Huang <henry.s.huang@gmail.com>
+##
+## This program is free software; you can redistribute it and/or
+## modify it under the terms of the GNU General Public
+## License as published by the Free Software Foundation; either
+## version 2.1 of the License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+## General Public License for more details.
+#
+## You should have received a copy of the GNU General Public
+## License along with this program; if not, write to the
+## Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+## Boston, MA 02111-1307, USA.
+
+# chkconfig: 35 40 80
+# Description: drcom Linux kernel module
+#
+### BEGIN INIT INFO
+# Provides:       drcom
+# Short-Description: drcom Linux kernel module
+# Required-Start: $local_fs $network $syslog
+# Required-Stop: $local_fs $network $syslog
+# Default-Start: 3 5
+# Default-Stop: 0 1 2 4 6
+# Short-Description: drcom Linux kernel module auto loaded/unloaded/compiled
+# Description: Linux kernel module -- drcom.ko 
+#		For TCP/UDP Header Authentiacation in Dr.COM Networks.
+#		With this init script, it will be loaded/compiled at boot-up time.
+### END INIT INFO
+
+MODULE_NAME="drcom"
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:$PATH
+LOG="/var/log/$MODULE_NAME-install.log"
+BUILDDRCOM="/usr/bin/mkdrcom"
+
+echo `date` `uname -r` >> $LOG 2>&1
+echo 'drcom init script' >> $LOG 2>&1
+echo '----------------------------------' >> $LOG 2>&1
+
+
+## FIXME: Ubuntu,etc. does have /lib/lsb/init-functins, 
+# but it does not adpot the standard LSB INIT Script.
+# Maybe in the next version, we will imporve it.
+
+[ -f /lib/lsb/init-functions ] || NOLSB=yes
+if [ -n "$NOLSB" ]; then
+	if [ -f /etc/redhat-release ]; then
+    	 system=redhat
+	elif [ -f /etc/SuSE-release ]; then
+    	 system=suse
+	elif [ -f /etc/gentoo-release ]; then
+    	 system=gentoo
+	elif [ -f /etc/arch-release ]; then
+    	 system=archlinux
+	fi
+fi
+
+if [ -z "$NOLSB" ]; then
+    . /lib/lsb/init-functions
+    fail_msg() {
+        log_failure_msg "$1"
+    }
+    succ_msg() {
+        log_success_msg " done."
+    }
+    begin_msg() {
+        log_warning_msg "$@"
+    }
+else
+	if [ "$system" = "redhat" ]; then
+	   . /etc/init.d/functions
+	   fail_msg() {
+	       echo -n " "
+	       echo_failure
+	       echo
+	       echo "  ($1)"
+	   }
+	   succ_msg() {
+	       echo -n " "
+	       echo_success
+	       echo
+	   }
+	elif [ "$system" = "suse" ]; then
+	     . /etc/rc.status
+	     fail_msg() {
+	         rc_failed 1
+	         rc_status -v
+	         echo "  ($1)"
+	     }
+	     succ_msg() {
+	         rc_reset
+	         rc_status -v
+	     }
+	elif [ "$system" = "gentoo" ]; then
+	     if [ -f /sbin/functions.sh ]; then
+	        . /sbin/functions.sh
+	     elif [ -f /etc/init.d/functions.sh ]; then
+	        . /etc/init.d/functions.sh
+	     fi
+	     fail_msg() {
+	         eerror "$1"
+	     }
+	     succ_msg() {
+	         eend "$?"
+	     }
+	     begin_msg() {
+	         ebegin "$1"
+	     }
+	     if [ "`which $0`" = "/sbin/rc" ]; then
+	        shift
+	     fi
+	elif [ "$system" = "archlinux" ]; then
+	     . /etc/rc.conf
+	     . /etc/rc.d/functions
+		 ## FIXME: when failure() calls fail_msg(), nothing displays.
+	     fail_msg() {
+		 stat_fail "$1"
+	     }
+	     succ_msg() {
+		 stat_done "$?"
+	     }
+		 begin_msg() {
+		 stat_busy "$1"
+		 }
+	else
+	     fail_msg() {
+	         echo " ...failed!"
+	         echo "  ($1)"
+	     }
+	     succ_msg() {
+	         echo " ...done."
+	     }
+	fi
+	
+	if [ "$system" != "gentoo" ]; then
+	   if [ "$system" != "archlinux" ]; then
+		   begin_msg() {
+		       [ -z "${1:-}" ] && return 1
+		       if [ -z "${2:-}" ]; then
+		          echo -n "$1"
+		       else
+		          echo -n "$1: $2"
+		       fi
+	   }
+	   fi
+	fi
+fi
+	
+failure()
+{
+    fail_msg "$1"
+	echo "" >> $LOG 2>&1
+    exit 0
+}
+
+running()
+{
+    lsmod | grep -q "$1[^_-]"
+}
+
+start()
+{
+    if ! find /lib/modules/`uname -r`/extra -name "$MODULE_NAME.*" 2>/dev/null|grep -q $MODULE_NAME; then
+		begin_msg "Recompiling $MODULE_NAME kernel module."
+	    if ! $BUILDDRCOM >> $LOG 2>&1; then
+        	failure "Compile $MODULE_NAME failed. Look at $LOG to find out what went wrong."
+		fi
+	fi
+
+    begin_msg "Starting $MODULE_NAME kernel module."
+    if ! running $MODULE_NAME; then
+        if ! modprobe $MODULE_NAME > /dev/null 2>&1; then
+            failure "modprobe $MODULE_NAME failed. Please use 'dmesg' to find out why."
+        fi
+        sleep .2
+	else
+		failure "$MODULE_NAME kernel module has already loaded."
+    fi  
+    succ_msg
+}
+
+stop()
+{
+    begin_msg "Stopping $MODULE_NAME kernel module"
+    if running $MODULE_NAME; then
+        if ! rmmod $MODULE_NAME 2>/dev/null; then
+            failure "Cannot unload module $MODULE_NAME"
+        fi
+	else
+		failure "$MODULE_NAME kernel module has already unloaded."
+    fi
+    succ_msg
+}
+
+status()
+{
+	if running $MODULE_NAME; then
+		echo "$MODULE_NAME kernel modules are loaded."
+	else
+		echo "$MODULE_NAME kernel module is not loaded."
+	fi
+}
+
+case "$1" in
+start)
+	start
+	;;
+stop)
+	stop
+	;;
+restart)
+	stop && start
+	;;
+force-reload)
+	stop
+	start
+	;;
+status)
+	status
+	;;
+*)
+	echo "Usage: $0 {start|stop|restart|force-reload|status}"
+	exit 1
+esac
+exit 0

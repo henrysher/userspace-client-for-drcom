@@ -1,0 +1,289 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Henry Huang <henry.s.huang@gmail.com>, 2009.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PUM v1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-30 03:43-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Henry Huang <henry.s.huang@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: drcomclient:147
+msgid "Used "
+msgstr "已使用"
+
+#: drcomclient:147
+msgid " Min, "
+msgstr " 分钟, "
+
+#: drcomclient:148
+msgid " KB"
+msgstr " KB"
+
+#: drcomclient:154 drcomclient:157 drcomclient:160 drcomclient:163
+msgid "Balance"
+msgstr "费用"
+
+#: drcomclient:155 drcomclient:158 drcomclient:161 drcomclient:164
+msgid " yuan."
+msgstr " 元"
+
+#: drcomclient:177
+msgid "Unknown errors"
+msgstr "未知错误"
+
+#: drcomclient:178
+msgid "No active network card"
+msgstr "没有活动的网卡"
+
+#: drcomclient:179
+msgid "Can not get your ip address"
+msgstr "获取IP地址失败"
+
+#: drcomclient:180
+msgid "Can not get your MAC address"
+msgstr "获取MAC地址失败"
+
+#: drcomclient:181
+msgid "Can not get your DNS address"
+msgstr "获取DNS地址失败"
+
+#: drcomclient:182
+msgid "Fail to bind your port"
+msgstr "绑定端口失败"
+
+#: drcomclient:183
+msgid "Can not get your server ip address"
+msgstr "获取服务器地址失败"
+
+#: drcomclient:184
+msgid "Can not set up a socket"
+msgstr "创建套接字失败"
+
+#: drcomclient:185
+msgid "You have already LOGIN"
+msgstr "你已经登录"
+
+#: drcomclient:186
+msgid "You should LOGIN first"
+msgstr "你还没有登录"
+
+#: drcomclient:187
+msgid "Connection lost when login[request]"
+msgstr "登录过程请求失败"
+
+#: drcomclient:188
+msgid "Connection lost when login[response]"
+msgstr "登录过程回应丢失"
+
+#: drcomclient:189
+msgid "Connection lost when keep_alive[request]"
+msgstr "保持过程请求失败"
+
+#: drcomclient:190
+msgid "Connection lost when keep_alive[response]"
+msgstr "保持过程回应丢失"
+
+#: drcomclient:191
+msgid "Connection lost when logout[request]"
+msgstr "注销过程请求失败"
+
+#: drcomclient:192
+msgid "Connection lost when logout[response]"
+msgstr "注销过程回应丢失"
+
+#: drcomclient:193
+msgid "Connection lost when changing password[request]"
+msgstr "密码修改请求失败"
+
+#: drcomclient:194
+msgid "Connection lost when changing password[response]"
+msgstr "密码修改回应丢失"
+
+#: drcomclient:195
+msgid "Incorrect account name or password"
+msgstr "错误的帐号或者密码"
+
+#: drcomclient:196
+msgid "Login successful!"
+msgstr "登录成功"
+
+#: drcomclient:197
+msgid "Logout successful!"
+msgstr "注销成功"
+
+#: drcomclient:198
+msgid "No money left in your account!"
+msgstr "帐号欠费"
+
+#: drcomclient:199
+msgid "Account is working now!"
+msgstr "该帐号正在使用"
+
+#: drcomclient:200
+msgid "Logout failed!"
+msgstr "注销失败"
+
+#: drcomclient:201
+msgid "Password validation not the same"
+msgstr "密码不一致"
+
+#: drcomclient:202
+msgid "New password successfully"
+msgstr "密码修改成功"
+
+#: drcomclient:203
+msgid "Incorrect old password"
+msgstr "原密码错误"
+
+#: drcomclient:204
+msgid "Please logout first"
+msgstr "请先注销"
+
+#: drcomclient:205
+msgid "Fail to start No.38 timer"
+msgstr "开启38号定时器失败"
+
+#: drcomclient:206
+msgid "Fail to stop No.38 timer"
+msgstr "停止38号定时器失败"
+
+#: drcomclient:207
+msgid "Fail to start No.40 timer"
+msgstr "开启40号定时器失败"
+
+#: drcomclient:208
+msgid "Fail to stop No.40 timer"
+msgstr "停止40号定时器失败"
+
+#: drcomclient:209
+msgid ""
+"Fail to start auth module,\n"
+"RUN 'sudo drcom start'"
+msgstr ""
+"开启认证模块失败\n"
+"请运行 'sudo drcom start'命令"
+
+#: drcomclient:210
+msgid "Fail to stop auth module"
+msgstr "停止认证模块失败"
+
+#: drcomclient:212
+msgid ""
+"Cannot find drcom module,\n"
+"RUN 'sudo drcom start'"
+msgstr ""
+"无法找到drcom认证模块,\n"
+"请运行 'sudo drcom start'命令"
+
+#: drcomclient:213
+msgid "Unknown type of keep_alive packet"
+msgstr "保持过程出现未知包"
+
+#: drcomclient:214
+msgid "Update your client"
+msgstr "升级客户端"
+
+#: drcomclient:797
+msgid "Current State: Online"
+msgstr "当前状态: 在线"
+
+#: drcomclient:974 drcomclient:1275 drcomclient:1761
+msgid "Current State: Offline"
+msgstr "当前状态: 离线"
+
+#: drcomclient:1271
+msgid "Drcom-Client"
+msgstr "Drcom 客户端"
+
+#: drcomclient:1310
+msgid "Server IP"
+msgstr "服务器地址"
+
+#: drcomclient:1324
+msgid "Account "
+msgstr "帐号"
+
+#: drcomclient:1338
+msgid "Password"
+msgstr "密码"
+
+#: drcomclient:1352
+msgid "Save your Password"
+msgstr "保存密码"
+
+#: drcomclient:1364
+msgid "Login"
+msgstr "登录"
+
+#: drcomclient:1370
+msgid "Logout"
+msgstr "注销"
+
+#: drcomclient:1376 drcomclient:1385
+msgid "Quit"
+msgstr "退出"
+
+#: drcomclient:1381
+msgid "Connect"
+msgstr "登录"
+
+#: drcomclient:1382
+msgid "Disconnect"
+msgstr "注销"
+
+#: drcomclient:1383
+msgid "_Pass_Word"
+msgstr "修改密码"
+
+#: drcomclient:1384
+msgid "About"
+msgstr "关于"
+
+#: drcomclient:1442 drcomclient:1509
+msgid "New Password"
+msgstr "新密码"
+
+#: drcomclient:1471
+msgid "Account"
+msgstr "帐号"
+
+#: drcomclient:1485
+msgid "Old Password"
+msgstr "原密码"
+
+#: drcomclient:1497
+msgid "Confirm"
+msgstr "确认密码"
+
+#: drcomclient:1525
+msgid "OK"
+msgstr "确定"
+
+#: drcomclient:1532
+msgid "Cancel"
+msgstr "取消"
+
+#: drcomclient:1700 drcomclient:1710
+msgid "drcom-client"
+msgstr "Drcom 客户端"
+
+#: drcomclient:1712
+msgid "Copyright © 2009 drcom-client team"
+msgstr "版权 © 2009 drcom-client team"
+
+#: drcomclient:1750
+msgid "Success"
+msgstr "成功"
+
+#: drcomclient:1752
+msgid "Error "
+msgstr "错误 "

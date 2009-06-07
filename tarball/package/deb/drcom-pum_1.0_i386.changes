@@ -1,0 +1,37 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.7
+Date: Sun, 31 May 2009 02:47:04 -0400
+Source: drcom-pum
+Binary: drcom-pum
+Architecture: source all
+Version: 1.0
+Distribution: unstable
+Urgency: low
+Maintainer: Henry Huang <henry.s.huang@gmail.com>
+Changed-By: Henry Huang <henry.s.huang@gmail.com>
+Description: 
+ drcom-pum  - fully GUI configurable X drcom-client using GTK+
+Changes: 
+ drcom-pum (1.0) unstable; urgency=low
+ .
+   * Initial release.
+   * Add friendly Graphical User Interface for esay configuration.
+   * Support almost present Dr.COM protocols, except for v3.72_u31_2227.
+   * Handle except address more accuracy.
+   * Add multi-language support to message display.
+   * Rewrite user-mode protocol by Python.
+Files: 
+ 607f8c889a7c2fe0eebb22435378ff4b 598 misc optional drcom-pum_1.0.dsc
+ f235bbc541f8183be50a1c59ddb9a680 93369 misc optional drcom-pum_1.0.orig.tar.gz
+ 48265c14b86df217f65ae337e812ea26 11363 misc optional drcom-pum_1.0.diff.gz
+ b2f01f10369f02844d70f98b8feef7ee 105710 misc optional drcom-pum_1.0_all.deb
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFKK06XU/bNLpjvHQURAvZdAJ0QAdob996cR/Embw8LEMHVSoloCwCaA+Qo
+pBukMff54a6H0EaRJ9OK40M=
+=EG/U
+-----END PGP SIGNATURE-----

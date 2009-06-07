@@ -1,0 +1,5 @@
+$ make
+$ sudo make install
+$ sudo modprobe drcom
+$ drcom
+

@@ -9,7 +9,7 @@ Homepage: http://www.drcom-client.org/
 Package: drcom-pum
 Architecture: all
 Depends: python (>= 2.4), python-gtk2 (>= 2.12), 
-         python-notify, linux-headers (>= 2.6.24)
+         python-notify
 Recommends: bash, gcc, make, linux-headers-generic
 Conflicts: python3 (>= 3.0)
 Description: fully GUI configurable X drcom-client using GTK+
