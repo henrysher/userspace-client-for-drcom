@@ -23,15 +23,15 @@ Changes:
    * Add multi-language support to message display.
    * Rewrite user-mode protocol by Python.
 Files: 
- 3c7c77179ccbf2175d2bb08a5955f41b 598 misc optional drcom-pum_1.0.dsc
+ 6ea05ac3420ca93815a52116c503474e 598 misc optional drcom-pum_1.0.dsc
  f235bbc541f8183be50a1c59ddb9a680 93369 misc optional drcom-pum_1.0.orig.tar.gz
- 7129513a730742c27850e2cbc56778ec 11491 misc optional drcom-pum_1.0.diff.gz
- 36ac11fa5efe982e02e849e7ba207bdb 105698 misc optional drcom-pum_1.0_all.deb
+ 62db3b5534eb931c31606d1580008918 11723 misc optional drcom-pum_1.0.diff.gz
+ 588b080520e5aeaf5a56c07483839292 105750 misc optional drcom-pum_1.0_all.deb
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFKLqoKU/bNLpjvHQURAjzZAKCTKjtFV/Zc1b2eR8mU71Ntu1hhbwCdHJhg
-oPlnPizS1iHWPbqZ0/pZjLE=
-=zsRs
+iD8DBQFKL7ruU/bNLpjvHQURAmS+AJ0SP23UdIwq4kGBy/RkN3sDKrWFrgCfV68V
+jgiB4eNaTFgbPO1V0HpfmNI=
+=WuTh
 -----END PGP SIGNATURE-----
