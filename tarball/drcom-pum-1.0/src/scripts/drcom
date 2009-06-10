@@ -185,22 +185,24 @@ start()
         fi
         sleep .2
 	else
-		failure "$MODULE_NAME kernel module has already loaded."
+		begin_msg "$MODULE_NAME kernel module has already loaded."
     fi  
     succ_msg
 }
 
 stop()
 {
-    begin_msg "Stopping $MODULE_NAME kernel module"
-    if running $MODULE_NAME; then
-        if ! rmmod $MODULE_NAME 2>/dev/null; then
-            failure "Cannot unload module $MODULE_NAME"
-        fi
-	else
-		failure "$MODULE_NAME kernel module has already unloaded."
-    fi
-    succ_msg
+    if find /lib/modules/`uname -r`/extra -name "$MODULE_NAME.*" 2>/dev/null|grep -q $MODULE_NAME; then
+		begin_msg "Stopping $MODULE_NAME kernel module"
+    	if running $MODULE_NAME; then
+    	    if ! rmmod $MODULE_NAME 2>/dev/null; then
+    	        failure "Cannot unload module $MODULE_NAME"
+    	    fi
+		else
+			begin_msg "$MODULE_NAME kernel module has already unloaded."
+    	fi
+    	succ_msg
+	fi
 }
 
 status()
