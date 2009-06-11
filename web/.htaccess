@@ -2,3 +2,8 @@ Redirect 301 /wiki http://apps.sourceforge.net/trac/drcom-client/
 ErrorDocument 404 /errors/
 ErrorDocument 403 /errors/
 ErrorDocument 500 /errors/
+
+RewriteEngine on
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http://(www\.)?drcom-client.org/.*$ [NC]
+RewriteRule \.(gif|jpg|png)$ http://www.drcom-client.org/images/angryman.gif [R,L]
