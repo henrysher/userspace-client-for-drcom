@@ -98,13 +98,18 @@ $ make & sudo make install
 <li><h4>二进制包安装</h4></li>
 <ul>
 <li><b>Ubuntu/Debian Package (.deb)</b></li>
+<p>如果你使用 .deb 方式安装过 <b>g-drcomclient</b>，请先将 <b>g-drcomclient</b> 卸载，否则会导致错误的发生。</p>
+<pre>
+$ sudo dpkg -r drcomclient
+</pre>
+<p>现在你可以安装 drcom-pum 了。</p>
 <pre>
 $ sudo dpkg -i drcom-pum_1.0_all.deb
 </pre>
 
 <li><b>Fedora Package (.rpm)</b></li>
 <pre>
-$ sudo rpm -i drcom-pum_1.0_all.rpm
+$ sudo rpm -ivh drcom-pum_1.0_all.rpm
 </pre>
 </ul>
 </ol>
@@ -189,7 +194,7 @@ $ sudo dpkg -r drcom-pum_1.0_all.deb
 </pre>
 <li><b>Fedora Package (.rpm)</b></li>
 <pre>
-$ sudo rpm -r drcom-pum_1.0_all.rpm
+$ sudo rpm -e drcom-pum_1.0_all.rpm
 </pre>
 </ul>
 
@@ -247,7 +252,7 @@ $ sudo rpm -r drcom-pum_1.0_all.rpm
         <li class="subtitle">开发</li>
 	<li><a href="../docs/projects.html">子项目</a></li>
 	<li><a href="../docs/coding-style.html">代码风格</a></li>
-        <li><a href="../wiki/">开发者维基</a></li>
+        <li><a href="../../wiki/">开发者维基</a></li>
         <li><a href="../docs/tools.html">开发工具</a></li>
 
 

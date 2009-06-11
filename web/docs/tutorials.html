@@ -97,13 +97,19 @@ $ make & sudo make install
 <li><h4>Binary Package Installation</h4></li>
 <ul>
 <li><b>Ubuntu/Debian Package (.deb)</b></li>
+<p>If you have installed <b>g-drcomclient</b> before,
+you'd better uninstall it first. Otherwise, it will cause some problems.</p>
+<pre>
+$ sudo dpkg -r drcom-client
+</pre>
+<p>Now you could install drcom-pum.</p>
 <pre>
 $ sudo dpkg -i drcom-pum_1.0_all.deb
 </pre>
 
 <li><b>Fedora Package (.rpm)</b></li>
 <pre>
-$ sudo rpm -i drcom-pum_1.0_all.rpm
+$ sudo rpm -ivh drcom-pum_1.0_all.rpm
 </pre>
 </ul>
 </ol>
@@ -193,7 +199,7 @@ $ sudo dpkg -r drcom-pum_1.0_all.deb
 </pre>
 <li><b>Fedora Package (.rpm)</b></li>
 <pre>
-$ sudo rpm -r drcom-pum_1.0_all.rpm
+$ sudo rpm -e drcom-pum_1.0_all.rpm
 </pre>
 </ul>
 
