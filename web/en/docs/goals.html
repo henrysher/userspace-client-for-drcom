@@ -24,33 +24,33 @@
 
     <title> The Drcom-Client Open Source Project</title>
 
-	<link rel="icon" type="image/png" href="../images/drcom_small.png">
+	<link rel="icon" type="image/png" href="/images/drcom_small.png">
 
-    <link rel="stylesheet" type="text/css" href="../css/main.css">
-    <link rel="stylesheet" type="text/css" href="../css/green.css" title="green">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/green.css" title="green">
 
-    <link rel="alternate stylesheet" type="text/css" href="../css/blue.css" title="blue">
+    <link rel="alternate stylesheet" type="text/css" href="/css/blue.css" title="blue">
 
-    <link rel="alternate stylesheet" type="text/css" href="../css/yellow.css" title="yellow">
-    <link rel="alternate stylesheet" type="text/css" href="../css/pink.css" title="pink">
-    <link rel="alternate stylesheet" type="text/css" href="../css/purple.css" title="purple">
-    <link rel="alternate stylesheet" type="text/css" href="../css/gray.css" title="gray">
+    <link rel="alternate stylesheet" type="text/css" href="/css/yellow.css" title="yellow">
+    <link rel="alternate stylesheet" type="text/css" href="/css/pink.css" title="pink">
+    <link rel="alternate stylesheet" type="text/css" href="/css/purple.css" title="purple">
+    <link rel="alternate stylesheet" type="text/css" href="/css/gray.css" title="gray">
 
 <!--[if gte IE 5]>
-    <link rel="stylesheet" type="text/css" href="../css/ie.css">
+    <link rel="stylesheet" type="text/css" href="/css/ie.css">
 <![endif]-->
 
     <script type="text/javascript">
         pic1 = new Image(8,9);
-        pic1.src="../images/green-bullet.png";
+        pic1.src="/images/green-bullet.png";
         pic2 = new Image(8,9);
-        pic2.src="../images/blue-bullet.png";
+        pic2.src="/images/blue-bullet.png";
         pic3 = new Image(8,9);
-        pic3.src="../images/yellow-bullet.png";
+        pic3.src="/images/yellow-bullet.png";
         pic4 = new Image(8,9);
-        pic4.src="../images/pink-bullet.png";
+        pic4.src="/images/pink-bullet.png";
         pic5 = new Image(8,9);
-        pic5.src="../images/purple-bullet.png";
+        pic5.src="/images/purple-bullet.png";
     </script>
     
 <style type="text/css">
@@ -63,38 +63,44 @@ p { margin: 0px 0px 4px 0px; }
 </div>
 <div id="icon"></div>
 <div id="content">
-<h2>Intention</h2>
-<br>
-<p><b>drcom-client is
-<span class="help" title="software that may be modified and distributed freely, as long as you do not deny other users these freedoms">
-Free Software</span>. In the free software
-world, there is generally no distinction between users and
-developers. As in a friendly neighbourhood, everybody pitches in to
-help their neighbors.  Please consider the time you give in assistance
-to others as payment.</b></p>
-<br>
-<p><b>Ways in which you can help:</b></p>
-<br>
-<ul>
-  <li><a href="../docs/contacts.html">request</a> for new features,</li>
-  <li>report <a href="../docs/report-bugs.html">bugs</a> (errors in the program),</li>
-  <li>debug existing features,</li>
+<h2>Drcom-Client Project Goals</h2>
 
-  <li>add documentation,</li>
-  <li><a href="../docs/translates.html">translate</a> drcom-client to your own language,</li>
-  <li><a href="../docs/translates.html">translate</a> the documentation,</li>
-  <li>write <a href="../docs/tutorials.html">tutorials</a>,</li>
-  <li>participate in the UI brainstorm, </li>
+<h3>Introduction</h3>
+<br>
+<p>Drcom-Client is an open source ISP client for Dr.COM&reg; networks, a specialized broadband access and authentication system produced by Doctorcom Corp. However, Dr.COM&reg; has been used in many univerisites of China while its official client has only Windows version, which makes Linux/MacOSX users take much pains on internet access. Even with its official Windows client, users still have got dozens of problems, especially for its prevention of NAT/proxy servers.</p>
+<br>
+<p><a href="../docs/credits.html"> Drcom-Client Team </a> wish everyone could enjoy his freedom in internet access. That's the reason why we offer Drcom-Client's source code.</p>
 
-  <li>Make RPMs, DEBs or other forms for lots of distributions,</li> 
-  <li><a href="../docs/web-develop.html">improve</a> this web site,</li>
-  <li>make artwork for drcom-client used in,</li>
-  <li>let people know you used drcom-client,</li>
-  <li>give away copies of drcom-client, </li>
-  <li>help others to learn to use drcom-client, etc.</li>
-</ul>
+<h3>Goals</h3>
+<dl>
+<dt>ISP Client</dt>
+<dd>The project's primary focus is to make it as a general-purpose ISP client for Dr.COM&reg; networks, especially for Linux/MacOSX users. With Drcom-Client they will not be worried about no client for internet access any more.</dd>
 
-<b>As you can see, everyone can help.</b>
+<dt>Open Source</dt>
+<dd>Drcom-Client should remain freely usable for open source applications. To that end, we use the GPLv2 license.</dd>
+
+<dt>Security</dt>
+<dd>Protecting users from security violations is critical. We fix security issues promptly to protect users and maintain their trust.</dd>
+
+<dt>Stability</dt>
+<dd>We strive to focus on the stability of Drcom-Client. It means we would deal with crashes, hangs and regressions promptly, rather than letting them pile up.</dd>
+
+<dt>Compatibility</dt>
+<dd>We strive to maintain and improve Drcom-Client protocol compatibility with existing Dr.COM&reg; networks.</dd>
+
+<dt>Performance</dt>
+<dd>Maintaining and improving speed and memory use is an important goal. We never consider performance "good enough", but strive to constantly improve.</dd>
+
+<dt>Usability</dt>
+<dd>To work in accordance with good human interface design principles, and to mesh well with platform-native HI conventions, we strive to provide more features for better user experience, including those with disabilities.</dd>
+
+<dt>Portability</dt>
+<dd>We want to make it reasonable to port Drcom-Client to a variety of desktop, mobile, embedded and other platforms. We will provide appropriate and providing friendly embedding APIs.</dd>
+
+<dt>Hackability</dt>
+<dd>We try to keep the code relatively easy to understand, even though the protocol may become more complex. We strive to write clear, maintainable code, and we continue to improve names and code structure to aid understanding. </dd>
+
+</dl>
 </div>
 
 <div id="nav">
@@ -112,7 +118,7 @@ to others as payment.</b></p>
 		<li class="subtitle">Downloads</li>
 		<li><a href="../downloads/linux.html">Linux</a></li>
 		<li><a href="../downloads/windows.html">Windows</a></li>
-		<li><a href="../downloads/macosx.html">MacOSX</a></li>	
+		<li><a href="../downloads/macosx.html">MacOSX</a></li>
 	
         <li class="subtitle">Getting Started</li>
         <li><a href="../docs/faq.html">User FAQ</a></li>
@@ -127,12 +133,14 @@ to others as payment.</b></p>
         <li><a href="../docs/donate.html">Donate</a></li>
 
         <li class="subtitle">Development</li>
-		<li><a href="../docs/projects.html">Projects</a></li>
-		<li><a href="../docs/coding-style.html">Code Style</a></li>
-        <li><a href="../wiki/">Developer Wiki</a></li>
+	<li><a href="../docs/projects.html">Projects</a></li>
+	<li><a href="../docs/coding-style.html">Code Style</a></li>
+        <li><a href="/wiki/">Developer Wiki</a></li>
         <li><a href="../docs/tools.html">Development Tools</a></li>
 
+
     </ul>
+
 </div>
 
 
@@ -148,7 +156,7 @@ to others as payment.</b></p>
   <p>
     <script type="text/javascript" src="http://www.ohloh.net/p/30924/widgets/project_thin_badge.js"></script>
     <a title="This site is under a Creative Commons Attribution 3.0 License" href="http://creativecommons.org/licenses/by/3.0/">
-    <img alt="Creative Commons Attribution License" src="../images/creative-commons3.png"></a>
+    <img alt="Creative Commons Attribution License" src="/images/creative-commons3.png"></a>
     <a title="Development hosted by SourceForge" href="http://sourceforge.net/projects/drcom-client/">
     <img alt="SourceForge.net" src="http://sflogo.sourceforge.net/sflogo.php?group_id=6235&amp;type=1"></a></p>
 
@@ -156,7 +164,7 @@ to others as payment.</b></p>
   <h2>View this page in a different language</h2>
 -->
 
-  <p> English | <a lang="zh-CN" href="../zh_CN/docs/intention.html"> 中文(简)</a></p>
+  <p> English | <a lang="zh-CN" href="/zh_CN/docs/goals.html"> 中文(简)</a></p>
 <!--
 <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <Work rdf:about="">

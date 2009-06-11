@@ -24,33 +24,33 @@
 
     <title> The Drcom-Client Open Source Project</title>
 
-	<link rel="icon" type="image/png" href="../images/drcom_small.png">
+	<link rel="icon" type="image/png" href="/images/drcom_small.png">
 
-    <link rel="stylesheet" type="text/css" href="../css/main.css">
-    <link rel="stylesheet" type="text/css" href="../css/green.css" title="green">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/green.css" title="green">
 
-    <link rel="alternate stylesheet" type="text/css" href="../css/blue.css" title="blue">
+    <link rel="alternate stylesheet" type="text/css" href="/css/blue.css" title="blue">
 
-    <link rel="alternate stylesheet" type="text/css" href="../css/yellow.css" title="yellow">
-    <link rel="alternate stylesheet" type="text/css" href="../css/pink.css" title="pink">
-    <link rel="alternate stylesheet" type="text/css" href="../css/purple.css" title="purple">
-    <link rel="alternate stylesheet" type="text/css" href="../css/gray.css" title="gray">
+    <link rel="alternate stylesheet" type="text/css" href="/css/yellow.css" title="yellow">
+    <link rel="alternate stylesheet" type="text/css" href="/css/pink.css" title="pink">
+    <link rel="alternate stylesheet" type="text/css" href="/css/purple.css" title="purple">
+    <link rel="alternate stylesheet" type="text/css" href="/css/gray.css" title="gray">
 
 <!--[if gte IE 5]>
-    <link rel="stylesheet" type="text/css" href="../css/ie.css">
+    <link rel="stylesheet" type="text/css" href="/css/ie.css">
 <![endif]-->
 
     <script type="text/javascript">
         pic1 = new Image(8,9);
-        pic1.src="../images/green-bullet.png";
+        pic1.src="/images/green-bullet.png";
         pic2 = new Image(8,9);
-        pic2.src="../images/blue-bullet.png";
+        pic2.src="/images/blue-bullet.png";
         pic3 = new Image(8,9);
-        pic3.src="../images/yellow-bullet.png";
+        pic3.src="/images/yellow-bullet.png";
         pic4 = new Image(8,9);
-        pic4.src="../images/pink-bullet.png";
+        pic4.src="/images/pink-bullet.png";
         pic5 = new Image(8,9);
-        pic5.src="../images/purple-bullet.png";
+        pic5.src="/images/purple-bullet.png";
     </script>
     
 <style type="text/css">
@@ -63,55 +63,38 @@ p { margin: 0px 0px 4px 0px; }
 </div>
 <div id="icon"></div>
 <div id="content">
-<h2>Privacy Policy</h2>
-<h3>Statement and Purpose:</h3>
+<h2>Translations</h2>
+<br>
+<p>Available for drcom-client PUM project now.</p>
+<p>drcom-client PUM uses <a href="http://www.gnu.org/software/gettext/">GNU gettext</a> message catalogs (.po files) for translations into different languages.
+</p>
+<h3>I Want to Translate to a New Language</h3>
+<br>
+<p>If you want to add a new language, please download the provided <a href="/locales/drcom.pot">template file</a> and open it in your message catalog editor. Similar, if you want to update an existing translation, just download the corresponding .po file and edit it.</p>
 <br>
 <p>
-drcom-client is committed to respecting developers and volunteers right to privacy. As an team, we recognize the need for appropriate protection and management of any personally identifiable information provided to us.
+The second thing you should do is join the <a href="http://groups.google.com/group/drcom-client">Mailing List</a> and ask if anyone is already working on translating that language.  If there is already a translation which is not actively maintained, you can also offer your help.
 </p>
-<p>
-drcom-client has established this privacy policy to let developers and volunteers know that any personal and/or identifiable information under drcom-client’s care will be protected. drcom-client intends to develop proper measures to ensure that information under the team’s care is protected when using drcom-client’s electronic devices. drcom-client is committed to ensuring compliance with applicable privacy legislation.
-</p>
-<h3>Implementation:</h3>
- 
-<h4>Disclosure of Information to Third Parties</h4>
+<h3>Compiling and testing translations</h3>
 <br>
 <p>
-The only circumstances under which personal information may be disclosed to
-third parties is for the fulfillment of any purposes identified above, or as required
-by law. If personal information is disclosed to third parties for the fulfillment of any
-purposes identified above, drcom-client will ensure that appropriate security
-undertakings, such as confidentiality clauses in contractual agreements are
-employed to protect the transfer and use of personal information. drcom-client does not
-sell, trade, or rent information to third parties.
+To test your translations, you will have to compile the .po file into a .mo file using the <b>msgfmt</b> tool which is part of  <a href="http://www.gnu.org/software/gettext/">GNU gettext</a>.
+To test the compiled file, you can use the <a href="../downloads/index.html">latest builds</a> of drcom-client. Create a directory with the language code of your translation in the locales directory of drcom-client and put the compiled file with the name drcom.mo into it.
+If you submit your translation, you have to submit the uncompiled .po file, the compiled file is just for you to test.
 </p>
-
-<h4>Privacy when using this Website</h4>
-<br>
-<p> 
-E-mail sent to this website is kept strictly confidential. Your e-mail address will
-not be sold or shared with anyone outside of drcom-client.
-</p>
+<h3>When should I submit a translation update?</h3>
 <br>
 <p>
-drcom-client does not use your visits to this website to collect your personal
-information. drcom-client tracks the number of visitors to its websites for statistical
-purposes and to help it improve services. The type of data tracked includes
-pages opened, length of visit, type of browser used, and — possibly — the city or
-country where the browser is located.
+The translations are shipped with each drcom-client release, so there is no great advantage to submitting a translation multiple times during a release cycle. We announce a string freeze on the <a href="http://groups.google.com/group/drcom-client">Mailing List</a> about 4 days before each release. This is a promise to you that we will not add any new strings or change any existing ones. During this time you should finish translating any new strings and submit a new translation to us.
 </p>
 
-<h4>Mailing List Policy</h4>
+<h3>Where should I submit a translation update?</h3>
+<br>
+<p>If you've finished a translation, please make sure all translations make sense and there are no spelling errors. Make sure that the .po file is encoded using UTF-8. Catalogs in other charsets than UTF-8 might get rejected.</p>
+<br>
 <p>
-<b>(This applies to <a href="http://groups.google.com/group/drcom-client-user">User list</a>, <a href="http://groups.google.com/group/drcom-client">Mailing List</a>.)</b></p>
-<br>
-<p>These are public mailing lists. When you send a message to any of these addresses, it will be forwarded to all the list subscribers, including drcom-client developers and others.  <a href="http://groups.google.com">Google Groups</a> and other web sites may publish archives of these lists.</p>
-<br>
-<p><b>Your e-mail address will always be truncated in published archives for your privacy, and the drcom-client developers will not share your address with anyone.</b>  However, we <b>cannot</b> prevent other subscribers from seeing or publishing your messages. Therefore we recommend you avoid putting contact details such as street addresses or telephone numbers in your e-mails.</p>
-
-<h4>Concerns or questions regarding drcom-client</h4>
-<br>
-<p>If you have any questions about this policy or are not comfortable writing to a public mailing list, please send a private e-mail to our <a href="../docs/credits.html">lead developer</a>.</p>
+Then, please <a class="ext-link" href="/wiki/">create a new ticket</a> and attach your translation file. Also, please provide your full name, a contact email address, and the language and country code for your translation.
+</p>
 
 </div>
 
@@ -130,7 +113,7 @@ country where the browser is located.
 		<li class="subtitle">Downloads</li>
 		<li><a href="../downloads/linux.html">Linux</a></li>
 		<li><a href="../downloads/windows.html">Windows</a></li>
-		<li><a href="../downloads/macosx.html">MacOSX</a></li>
+		<li><a href="../downloads/macosx.html">MacOSX</a></li>	
 	
         <li class="subtitle">Getting Started</li>
         <li><a href="../docs/faq.html">User FAQ</a></li>
@@ -147,12 +130,10 @@ country where the browser is located.
         <li class="subtitle">Development</li>
 	<li><a href="../docs/projects.html">Projects</a></li>
 	<li><a href="../docs/coding-style.html">Code Style</a></li>
-        <li><a href="../wiki/">Developer Wiki</a></li>
+        <li><a href="/wiki/">Developer Wiki</a></li>
         <li><a href="../docs/tools.html">Development Tools</a></li>
 
-
     </ul>
-
 </div>
 
 
@@ -168,7 +149,7 @@ country where the browser is located.
   <p>
     <script type="text/javascript" src="http://www.ohloh.net/p/30924/widgets/project_thin_badge.js"></script>
     <a title="This site is under a Creative Commons Attribution 3.0 License" href="http://creativecommons.org/licenses/by/3.0/">
-    <img alt="Creative Commons Attribution License" src="../images/creative-commons3.png"></a>
+    <img alt="Creative Commons Attribution License" src="/images/creative-commons3.png"></a>
     <a title="Development hosted by SourceForge" href="http://sourceforge.net/projects/drcom-client/">
     <img alt="SourceForge.net" src="http://sflogo.sourceforge.net/sflogo.php?group_id=6235&amp;type=1"></a></p>
 
@@ -176,7 +157,7 @@ country where the browser is located.
   <h2>View this page in a different language</h2>
 -->
 
-  <p> English | <a lang="zh-CN" href="../zh_CN/docs/privacy.html"> 中文(简)</a></p>
+  <p> English | <a lang="zh-CN" href="/zh_CN/docs/translations.html"> 中文(简)</a></p>
 <!--
 <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <Work rdf:about="">

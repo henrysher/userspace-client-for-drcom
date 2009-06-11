@@ -24,33 +24,33 @@
 
     <title> The Drcom-Client Open Source Project</title>
 
-	<link rel="icon" type="image/png" href="../images/drcom_small.png">
+	<link rel="icon" type="image/png" href="/images/drcom_small.png">
 
-    <link rel="stylesheet" type="text/css" href="../css/main.css">
-    <link rel="stylesheet" type="text/css" href="../css/green.css" title="green">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/green.css" title="green">
 
-    <link rel="alternate stylesheet" type="text/css" href="../css/blue.css" title="blue">
+    <link rel="alternate stylesheet" type="text/css" href="/css/blue.css" title="blue">
 
-    <link rel="alternate stylesheet" type="text/css" href="../css/yellow.css" title="yellow">
-    <link rel="alternate stylesheet" type="text/css" href="../css/pink.css" title="pink">
-    <link rel="alternate stylesheet" type="text/css" href="../css/purple.css" title="purple">
-    <link rel="alternate stylesheet" type="text/css" href="../css/gray.css" title="gray">
+    <link rel="alternate stylesheet" type="text/css" href="/css/yellow.css" title="yellow">
+    <link rel="alternate stylesheet" type="text/css" href="/css/pink.css" title="pink">
+    <link rel="alternate stylesheet" type="text/css" href="/css/purple.css" title="purple">
+    <link rel="alternate stylesheet" type="text/css" href="/css/gray.css" title="gray">
 
 <!--[if gte IE 5]>
-    <link rel="stylesheet" type="text/css" href="../css/ie.css">
+    <link rel="stylesheet" type="text/css" href="/css/ie.css">
 <![endif]-->
 
     <script type="text/javascript">
         pic1 = new Image(8,9);
-        pic1.src="../images/green-bullet.png";
+        pic1.src="/images/green-bullet.png";
         pic2 = new Image(8,9);
-        pic2.src="../images/blue-bullet.png";
+        pic2.src="/images/blue-bullet.png";
         pic3 = new Image(8,9);
-        pic3.src="../images/yellow-bullet.png";
+        pic3.src="/images/yellow-bullet.png";
         pic4 = new Image(8,9);
-        pic4.src="../images/pink-bullet.png";
+        pic4.src="/images/pink-bullet.png";
         pic5 = new Image(8,9);
-        pic5.src="../images/purple-bullet.png";
+        pic5.src="/images/purple-bullet.png";
     </script>
     
 <style type="text/css">
@@ -63,78 +63,69 @@ p { margin: 0px 0px 4px 0px; }
 </div>
 <div id="icon"></div>
 <div id="content">
-<h2>News</h2>
-<h3>2009-06-11: drcom-client.ORG Launched!</h3>
+<h2>Download drcom-client for GNU/Linux</h2>
+<h3>Current Stable Release</h3>
+<ol>
+<li>GUI-based: <b>drcom-client PUM v1.0</b></li>
+<li>CLI-based: <b>drcom-client v1.4.8.2</b></li>
+</ol>
+<p>To install drcom-client you may find the <a href="../docs/tutorials.html">Tutorials</a> helpful. For
+additional help, the <a href="../docs/faq.html">FAQ</a> is a good starting point.</p>
+<h4>Dependencies</h4>
 <br>
-<p>
-A big <b>THANKS</b> to all our supporters for their <b>LOVE</b> to <b>drcom-client</b>!</p>
-<p>We have finally got <a href="http://drcom-client.org"><b>drcom-client.org</b></a> Online!</p>
-<h3>2009-06-11: drcom-client PUM v1.0 released</h3>
-<p>Support GNU/Linux</p>
-<b>New features:</b>
+<b>drcom-client PUM v1.0</b>
 <ul>
-<li>Add friendly Graphical User Interface for esay configuration</li>
-<li>Support present Dr.COM protocols, except for v3.72_u31_2227</li>
-<li>Handle except address more accuracy</al>
-<li>Add multi-language support to message display</li>
-<li>Rewrite user-mode protocol by Python</li>
-</ul>
-<h3>2009-03-28: drcom-client v1.4.8.2 released</h3>
-<p>Support GNU/Linux</p>
-<b>Bugfixes and minor changes:</b>
-<ul>
-<li>Add README in English</li>
-<li>Fix: acquire all except addresses from server_ack</li>
-</ul>
-<h3>2008-11-02: drcom-client v1.4.8.1 released</h3>
-<p>Support GNU/Linux</p>
-<b>Bugfixes and minor changes:</b>
-<ul>
-<li>Fix FTP-based sequence adjustment problem</li>
-</ul>
-<h3>2008-10-22: drcom-client v1.4.8 released</h3>
-<p>Support GNU/Linux</p>
-<b>Bugfixes and minor changes:</b>
-<ul>
-<li>Adapt to Linux Kernel 2.6.27</li>
-<li>Increase the size of buffer in readconf.c</li>
-</ul>
-<h3>2008-05-17: drcom-client v1.4.6 released</h3>
-<p>Support GNU/Linux</p>
-<b>Bugfixes and minor changes:</b>
-<ul>
-<li>Convert strtol() to atoi()</li>
-<li>Fix recv fail problem</li>
-<li>Adapt to Linux Kernel 2.6.25</li>
-<li>Fix: pkt_size returned from login_ack may less than sizeof(struct drcom_acknowledgement)</li>
-</ul>
-<h3>2008-04-12: drcom-client v1.4.4 released</h3>
-<p>Support GNU/Linux</p>
-<b>Bugfixes and minor changes:</b>
-<ul>
-<li>Add README file</li>
-<li>Fix: MAC address in configuration file can override one acquired from system</li>
-</ul>
-<h3>2008-04-05: drcom-client v1.4.2 released</h3>
-<p>Support GNU/Linux</p>
-<b>Bugfixes and minor changes:</b>
-<ul>
-<li>Fix abnormal UDP header prefix authentication</li>
-<li>Use excepts in login response</li>
-</ul>
+<li>Linux Kernel >= 2.6.24 </li>
+<li>GNOME Desktop required</li>
+<li>Python >=2.4 (not include 3k) required</li>
+<li>PyGTK >=2.0 required</li>
+</ul> 
+<h4>Binaries</h4>
+<br>
+<p>Installation packages for drcom-client on GNU/Linux are often provided by individual distributions:</p>
+<p>Only supports drcom-client PUM v1.0 now</p>
+<table class="center">
+<tr>
+<td><img src="/images/debian.png" alt="" width="30" height="30" /></td>
+<td><a href="downloads/packages/deb/drcom-pum_1.0_all.deb">Ubuntu/Debian Package (.deb)</a></td>
+</tr>
+<tr>
+<td><img src="/images/fedora.png" alt="" width="30" height="30" /></td>
+<td><a href="/downloads/packages/rpm/drcom-pum-1.0-1.fc10.i386.rpm">Fedora Package (.rpm)</a></td>
+</tr>
+<!--
+<tr>
+<td><img src="/images/gentoo.png" alt="" width="30" height="30"/></td>
+<td><a href="/downloads/pcakges/drcom-client-PUM">Gentoo Package</a></td>
+</tr>
+-->
+</table>
+<dl>
+<dt>Note</dt>
+<dd>
+The above list is not comprehensive. If you don't see an up-to-date package for your own distribution, we recommend searching your distribution's web site for the latest information. Alternatively, you can compile drcom-client from source code.
+</dd>
+</dl>
+<h4>Sources</h4>
+<br>
+<p>Grab the latest version of the source from below and have fun compiling! </p>
+<table class="center">
+<tr>
+<td><img src="/images/sources.png" alt="" width="30" height="30" /></td>
+<td><a href="/downloads/packages/src/drcom-pum-1.0.tar.gz">drcom-client PUM v1.0</a></td>
+</tr>
+<tr>
+<td><img src="/images/sources.png" alt="" width="30" height="30" /></td>
+<td><a href="/downloads/packages/src/drcom-1.4.8.2.tar.gz">drcom-client v1.4.8.2</a></td>
+</tr>
+</table>
+<p>You might want to compare the <a href="../downloads/md5.html">MD5 sum</a> to verify the integrity of downloaded packages. </p>
+<dl>
+<dt>Note:</dt>
+<dd>Ubuntu users might want to install the <a href="http://packages.ubuntu.com/search?keywords=dkms&searchon=names&suite=all&section=all">dkms</a> package (not available on Debian) to ensure that the drcom-client kernel module (drcom) are properly updated if the linux kernel version changes during the next <b>apt-get upgrade</b>.</dd>
+</dl>
+<h3><a href="https://sourceforge.net/project/showfiles.php?group_id=128089&package_id=234598">Previous Stable Releases</a></h3>
 
-<h3>2008-03-31: drcom-client v1.4.0 released</h3>
-<p>Support GNU/Linux</p>
-<b>New features:</b>
-<ul>
-<li>Add netfilter-based kernel module to solve the problem of TCP/UDP header prefix authentication</li>
-<li>Rewrite the whole framework from drcom-client v1.3.7</li>
-</ul>
-<b>Bugfixes and minor changes:</b>
-<ul>
-<li>Use pthread_cancel(), to avoid memory leak</li>
-<li>Replace old md5.c/md5.h with new one</li>
-</ul>
 </div>
 
 <div id="nav">
@@ -167,9 +158,9 @@ A big <b>THANKS</b> to all our supporters for their <b>LOVE</b> to <b>drcom-clie
         <li><a href="../docs/donate.html">Donate</a></li>
 
         <li class="subtitle">Development</li>
-	<li><a href="../docs/projects.html">Projects</a></li>
-	<li><a href="../docs/coding-style.html">Code Style</a></li>
-        <li><a href="../wiki/">Developer Wiki</a></li>
+		<li><a href="../docs/projects.html">Projects</a></li>
+		<li><a href="../docs/coding-style.html">Code Style</a></li>
+        <li><a href="/wiki/">Developer Wiki</a></li>
         <li><a href="../docs/tools.html">Development Tools</a></li>
 
 
@@ -190,7 +181,7 @@ A big <b>THANKS</b> to all our supporters for their <b>LOVE</b> to <b>drcom-clie
   <p>
     <script type="text/javascript" src="http://www.ohloh.net/p/30924/widgets/project_thin_badge.js"></script>
     <a title="This site is under a Creative Commons Attribution 3.0 License" href="http://creativecommons.org/licenses/by/3.0/">
-    <img alt="Creative Commons Attribution License" src="../images/creative-commons3.png"></a>
+    <img alt="Creative Commons Attribution License" src="/images/creative-commons3.png"></a>
     <a title="Development hosted by SourceForge" href="http://sourceforge.net/projects/drcom-client/">
     <img alt="SourceForge.net" src="http://sflogo.sourceforge.net/sflogo.php?group_id=6235&amp;type=1"></a></p>
 
@@ -198,7 +189,7 @@ A big <b>THANKS</b> to all our supporters for their <b>LOVE</b> to <b>drcom-clie
   <h2>View this page in a different language</h2>
 -->
 
-  <p> English | <a lang="zh-CN" href="../zh_CN/docs/news.html"> 中文(简)</a></p>
+  <p> English | <a lang="zh-CN" href="/zh_CN/downloads/linux.html"> 中文(简)</a></p>
 <!--
 <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <Work rdf:about="">

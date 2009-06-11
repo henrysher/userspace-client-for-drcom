@@ -24,33 +24,33 @@
 
     <title> The Drcom-Client Open Source Project</title>
 
-	<link rel="icon" type="image/png" href="../images/drcom_small.png">
+	<link rel="icon" type="image/png" href="/images/drcom_small.png">
 
-    <link rel="stylesheet" type="text/css" href="../css/main.css">
-    <link rel="stylesheet" type="text/css" href="../css/green.css" title="green">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/green.css" title="green">
 
-    <link rel="alternate stylesheet" type="text/css" href="../css/blue.css" title="blue">
+    <link rel="alternate stylesheet" type="text/css" href="/css/blue.css" title="blue">
 
-    <link rel="alternate stylesheet" type="text/css" href="../css/yellow.css" title="yellow">
-    <link rel="alternate stylesheet" type="text/css" href="../css/pink.css" title="pink">
-    <link rel="alternate stylesheet" type="text/css" href="../css/purple.css" title="purple">
-    <link rel="alternate stylesheet" type="text/css" href="../css/gray.css" title="gray">
+    <link rel="alternate stylesheet" type="text/css" href="/css/yellow.css" title="yellow">
+    <link rel="alternate stylesheet" type="text/css" href="/css/pink.css" title="pink">
+    <link rel="alternate stylesheet" type="text/css" href="/css/purple.css" title="purple">
+    <link rel="alternate stylesheet" type="text/css" href="/css/gray.css" title="gray">
 
 <!--[if gte IE 5]>
-    <link rel="stylesheet" type="text/css" href="../css/ie.css">
+    <link rel="stylesheet" type="text/css" href="/css/ie.css">
 <![endif]-->
 
     <script type="text/javascript">
         pic1 = new Image(8,9);
-        pic1.src="../images/green-bullet.png";
+        pic1.src="/images/green-bullet.png";
         pic2 = new Image(8,9);
-        pic2.src="../images/blue-bullet.png";
+        pic2.src="/images/blue-bullet.png";
         pic3 = new Image(8,9);
-        pic3.src="../images/yellow-bullet.png";
+        pic3.src="/images/yellow-bullet.png";
         pic4 = new Image(8,9);
-        pic4.src="../images/pink-bullet.png";
+        pic4.src="/images/pink-bullet.png";
         pic5 = new Image(8,9);
-        pic5.src="../images/purple-bullet.png";
+        pic5.src="/images/purple-bullet.png";
     </script>
     
 <style type="text/css">
@@ -63,69 +63,38 @@ p { margin: 0px 0px 4px 0px; }
 </div>
 <div id="icon"></div>
 <div id="content">
-<h2>Download drcom-client for GNU/Linux</h2>
-<h3>Current Stable Release</h3>
-<ol>
-<li>GUI-based: <b>drcom-client PUM v1.0</b></li>
-<li>CLI-based: <b>drcom-client v1.4.8.2</b></li>
-</ol>
-<p>To install drcom-client you may find the <a href="../docs/tutorials.html">Tutorials</a> helpful. For
-additional help, the <a href="../docs/faq.html">FAQ</a> is a good starting point.</p>
-<h4>Dependencies</h4>
+<h2>Intention</h2>
 <br>
-<b>drcom-client PUM v1.0</b>
+<p><b>drcom-client is
+<span class="help" title="software that may be modified and distributed freely, as long as you do not deny other users these freedoms">
+Free Software</span>. In the free software
+world, there is generally no distinction between users and
+developers. As in a friendly neighbourhood, everybody pitches in to
+help their neighbors.  Please consider the time you give in assistance
+to others as payment.</b></p>
+<br>
+<p><b>Ways in which you can help:</b></p>
+<br>
 <ul>
-<li>Linux Kernel >= 2.6.24 </li>
-<li>GNOME Desktop required</li>
-<li>Python >=2.4 (not include 3k) required</li>
-<li>PyGTK >=2.0 required</li>
-</ul> 
-<h4>Binaries</h4>
-<br>
-<p>Installation packages for drcom-client on GNU/Linux are often provided by individual distributions:</p>
-<p>Only supports drcom-client PUM v1.0 now</p>
-<table class="center">
-<tr>
-<td><img src="../images/debian.png" alt="" width="30" height="30" /></td>
-<td><a href="../downloads/packages/deb/drcom-pum_1.0_all.deb">Ubuntu/Debian Package (.deb)</a></td>
-</tr>
-<tr>
-<td><img src="../images/fedora.png" alt="" width="30" height="30" /></td>
-<td><a href="../downloads/packages/rpm/drcom-pum-1.0-1.fc10.i386.rpm">Fedora Package (.rpm)</a></td>
-</tr>
-<!--
-<tr>
-<td><img src="../images/gentoo.png" alt="" width="30" height="30"/></td>
-<td><a href="../downloads/pcakges/drcom-client-PUM">Gentoo Package</a></td>
-</tr>
--->
-</table>
-<dl>
-<dt>Note</dt>
-<dd>
-The above list is not comprehensive. If you don't see an up-to-date package for your own distribution, we recommend searching your distribution's web site for the latest information. Alternatively, you can compile drcom-client from source code.
-</dd>
-</dl>
-<h4>Sources</h4>
-<br>
-<p>Grab the latest version of the source from below and have fun compiling! </p>
-<table class="center">
-<tr>
-<td><img src="../images/sources.png" alt="" width="30" height="30" /></td>
-<td><a href="../downloads/packages/src/drcom-pum-1.0.tar.gz">drcom-client PUM v1.0</a></td>
-</tr>
-<tr>
-<td><img src="../images/sources.png" alt="" width="30" height="30" /></td>
-<td><a href="../downloads/packages/src/drcom-1.4.8.2.tar.gz">drcom-client v1.4.8.2</a></td>
-</tr>
-</table>
-<p>You might want to compare the <a href="../downloads/md5.html">MD5 sum</a> to verify the integrity of downloaded packages. </p>
-<dl>
-<dt>Note:</dt>
-<dd>Ubuntu users might want to install the <a href="http://packages.ubuntu.com/search?keywords=dkms&searchon=names&suite=all&section=all">dkms</a> package (not available on Debian) to ensure that the drcom-client kernel module (drcom) are properly updated if the linux kernel version changes during the next <b>apt-get upgrade</b>.</dd>
-</dl>
-<h3><a href="https://sourceforge.net/project/showfiles.php?group_id=128089&package_id=234598">Previous Stable Releases</a></h3>
+  <li><a href="../docs/contacts.html">request</a> for new features,</li>
+  <li>report <a href="../docs/report-bugs.html">bugs</a> (errors in the program),</li>
+  <li>debug existing features,</li>
 
+  <li>add documentation,</li>
+  <li><a href="../docs/translates.html">translate</a> drcom-client to your own language,</li>
+  <li><a href="../docs/translates.html">translate</a> the documentation,</li>
+  <li>write <a href="../docs/tutorials.html">tutorials</a>,</li>
+  <li>participate in the UI brainstorm, </li>
+
+  <li>Make RPMs, DEBs or other forms for lots of distributions,</li> 
+  <li><a href="../docs/web-develop.html">improve</a> this web site,</li>
+  <li>make artwork for drcom-client used in,</li>
+  <li>let people know you used drcom-client,</li>
+  <li>give away copies of drcom-client, </li>
+  <li>help others to learn to use drcom-client, etc.</li>
+</ul>
+
+<b>As you can see, everyone can help.</b>
 </div>
 
 <div id="nav">
@@ -143,7 +112,7 @@ The above list is not comprehensive. If you don't see an up-to-date package for 
 		<li class="subtitle">Downloads</li>
 		<li><a href="../downloads/linux.html">Linux</a></li>
 		<li><a href="../downloads/windows.html">Windows</a></li>
-		<li><a href="../downloads/macosx.html">MacOSX</a></li>
+		<li><a href="../downloads/macosx.html">MacOSX</a></li>	
 	
         <li class="subtitle">Getting Started</li>
         <li><a href="../docs/faq.html">User FAQ</a></li>
@@ -160,20 +129,18 @@ The above list is not comprehensive. If you don't see an up-to-date package for 
         <li class="subtitle">Development</li>
 		<li><a href="../docs/projects.html">Projects</a></li>
 		<li><a href="../docs/coding-style.html">Code Style</a></li>
-        <li><a href="../wiki/">Developer Wiki</a></li>
+        <li><a href="/wiki/">Developer Wiki</a></li>
         <li><a href="../docs/tools.html">Development Tools</a></li>
 
-
     </ul>
-
 </div>
 
 
 <div id="footer">
   <br><br><br><br>
   <p>
-    <a href="./docs/privacy.html">Privacy</a>
-    | <a href="./docs/site-map.html">Site Map</a>
+    <a href="../docs/privacy.html">Privacy</a>
+    | <a href="../docs/site-map.html">Site Map</a>
   </p>
   <p>
       Copyright © 2009 <b>drcom-client</b> team
@@ -181,7 +148,7 @@ The above list is not comprehensive. If you don't see an up-to-date package for 
   <p>
     <script type="text/javascript" src="http://www.ohloh.net/p/30924/widgets/project_thin_badge.js"></script>
     <a title="This site is under a Creative Commons Attribution 3.0 License" href="http://creativecommons.org/licenses/by/3.0/">
-    <img alt="Creative Commons Attribution License" src="../images/creative-commons3.png"></a>
+    <img alt="Creative Commons Attribution License" src="/images/creative-commons3.png"></a>
     <a title="Development hosted by SourceForge" href="http://sourceforge.net/projects/drcom-client/">
     <img alt="SourceForge.net" src="http://sflogo.sourceforge.net/sflogo.php?group_id=6235&amp;type=1"></a></p>
 
@@ -189,7 +156,7 @@ The above list is not comprehensive. If you don't see an up-to-date package for 
   <h2>View this page in a different language</h2>
 -->
 
-  <p> English | <a lang="zh-CN" href="../zh_CN/downloads/linux.html"> 中文(简)</a></p>
+  <p> English | <a lang="zh-CN" href="/zh_CN/docs/intention.html"> 中文(简)</a></p>
 <!--
 <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <Work rdf:about="">
