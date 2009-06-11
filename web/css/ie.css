@@ -5,18 +5,18 @@
 
 #title h1 {
     background-image: none !important;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='/web/images/middle.png');
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='/images/middle.png');
     margin-right: 0px !important;
     padding-right: 15px !important;
 }
 
 #icon {
     background-image: none !important;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src='/web/images/drcom.png');
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src='/images/drcom.png');
 }
 
 #nav {
-    background-image: url( /web/images/ie-nav.png ) !important;
+    background-image: url( /images/ie-nav.png ) !important;
 }
 
 #content ul {
