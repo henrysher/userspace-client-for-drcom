@@ -3,7 +3,7 @@ ErrorDocument 404 /errors/
 ErrorDocument 403 /errors/
 ErrorDocument 500 /errors/
 
+Options +FollowSymlinks
 RewriteEngine on
-RewriteCond %{HTTP_REFERER} !^$
-RewriteCond %{HTTP_REFERER} !^http://(www\.)?drcom-client.org/.*$ [NC]
-RewriteRule \.(gif|jpg|png)$ http://www.drcom-client.org/images/angryman.gif [R,L]
+rewritecond %{http_host} ^drcom-client.org [nc]
+rewriterule ^(.*)$ http://www.drcom-client.org/$1 [r=301,nc] 

@@ -1,25 +1,7 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<script type="text/javascript">
-<!--//
-if (navigator.appName == 'Netscape')
-var language = navigator.language;
-else
-var language = navigator.browserLanguage;
-
-
-if (language.indexOf('en') > -1) document.location.href = '/en/';
-else if (language.indexOf('zh') > -1) document.location.href = '/zh_CN/';
-else
-document.location.href = '/zh_CN/';
-// End -->
-</script>
-</head>
-
-<body>
-
-
+<title> The Drcom-Client Open Source Project</title>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -30,6 +12,19 @@ var pageTracker = _gat._getTracker("UA-6270214-3");
 pageTracker._trackPageview();
 } catch(err) {}</script>
 
+</head>
+<body>
+<script type="text/javascript">
+if (navigator.appName == 'Netscape')
+	var language = navigator.language;
+else
+	var language = navigator.browserLanguage;
+if (language.indexOf('en') > -1) document.location.href = '/en/';
+else 
+	if (language.indexOf('zh') > -1) document.location.href = '/zh_CN/';
+	else
+		document.location.href = '/zh_CN/';
+</script>
 </body>
 </html>
 

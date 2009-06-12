@@ -209,7 +209,6 @@ class drcom_client:
 			'53':_("Fail to stop No.40 timer"),
 			'54':_("Fail to start auth module,\nRUN \'sudo modprobe drcom\'"),
 			'55':_("Fail to stop auth module"),
-			## FIXME: kdrcom is not a good name:(
 			'56':_("Cannot find drcom module,\nRUN \'sudo drcom start\'"),
 			'60':_("Unknown type of keep_alive packet"),
 			'61':_("Update your client"),

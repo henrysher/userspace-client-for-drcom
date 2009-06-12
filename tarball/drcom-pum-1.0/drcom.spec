@@ -1,6 +1,6 @@
 Name:		drcom-pum          
 Version:	1.0       
-#Release:        1%{?dist}
+Release:        1%{?dist}
 Summary:	fully GUI configurable X drcom-client using GTK+        
 
 Group:		Applications/Internet      
@@ -34,10 +34,6 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %post
 /usr/bin/drcom start
 /usr/bin/drunlevel add drcom
-
-#%postun
-#/usr/bin/drcom stop
-#/usr/bin/drunlevel del drcom
 
 %clean
 rm -rf $RPM_BUILD_ROOT

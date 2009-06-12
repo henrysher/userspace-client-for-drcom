@@ -52,25 +52,25 @@ if ! [ -d /lib/modules/`uname -r`/build ]; then
 		echo "You should install kernel headers first."
 		echo "Do this in your terminal: "
 		echo "$ "
-		exit 0
+		exit 1
 	elif [ "$system" = "debian" ]; then
 		echo "You should install kernel headers first."
 		echo "Do this in your terminal: "
 		echo "$ sudo apt-get install linux-headers-`uname -r`"
-		exit 0
+		exit 1
 	elif [ "$system" = "gentoo" ]; then
 		echo "You should install kernel headers first."
 		echo "Do this in your terminal: "
 		echo "$"
-		exit 0
+		exit 1
 	elif [ "$system" = "archlinux" ]; then
 		echo "You should install kernel headers first."
 		echo "Do this in your terminal: "
 		echo "$"
-		exit 0
+		exit 1
 	else
 		echo "You should install kernel headers first."
-		exit 0
+		exit 1
 	fi
 else
 	cd $MAKE_DIR
@@ -79,11 +79,11 @@ else
 	echo "Wait for a moment..."
 	if ! make >> $LOG 2>&1; then
 		echo "Compile drcom kernel module failed!"
-		exit 0
+		exit 1
 	fi
 	if ! make install >> $LOG 2>&1; then
 		echo "Install drcom kernel module failed!"
-		exit 0
+		exit 1
 	fi
 	echo "Install drcom kernel module successfully!"
 fi
