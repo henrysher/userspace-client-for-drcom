@@ -77,10 +77,18 @@ p { margin: 0px 0px 4px 0px; }
 <b>drcom-client PUM v1.0</b>
 <ul>
 <li>Linux 内核版本 >= 2.6.24</li>
-<li>桌面系统: GNOME 2</li>
+<li>推荐桌面系统: GNOME 2</li>
 <li>Python >=2.4 (不包含Python 3)</li>
 <li>PyGTK >=2.0 </li>
-</ul> 
+</ul>
+<dt>注意:</dt>
+<dd>如果桌面系统是 <b>xfce 4</b> ，安装 <b><a href="http://goodies.xfce.org/projects/applications/notification-daemon-xfce">notification-daemon-xfce</a></b> 之后，也可以使用</dl>
+<dd>如果桌面系统是 <b>KDE</b>，安装下面的软件包，也可以使用
+<ul>
+<li>Debian/Ubuntu: <b>python-gtk2 python-notify</b></li>
+<li>Fedora: <b>pygtk2 notify-python</b></li>
+</ul>
+</dd>
 <h4>二进制安装包</h4>
 <br>
 <p>基于GNU/Linux 的 drcom-client 二进制安装包，根据不同的 Linux 发行版，目前支持的类型:</p>
@@ -125,7 +133,7 @@ p { margin: 0px 0px 4px 0px; }
 <p>你可能想要源码包的<a href="../downloads/md5.html">MD5信息</a>，来验证下载的完整性。</p>
 <dl>
 <dt>注意:</dt>
-<dd>Ubuntu 用户可能需要安装<a href="http://packages.ubuntu.com/search?keywords=dkms&searchon=names&suite=all&section=all"> dkms </a>包 (目前在 Debian 系统下还没有得到支持)。这个包的作用是保证 drcom-client 认证模块(drcom) 能随着 Linux 内核的改变而及时地编译安装。</dd>
+<dd>Ubuntu 用户<b>可能</b>需要安装<a href="http://packages.ubuntu.com/search?keywords=dkms&searchon=names&suite=all&section=all"> dkms </a>包 (目前在 Debian 系统下还没有得到支持)。这个包的作用是保证 drcom-client 认证模块(drcom) 能随着 Linux 内核的改变而及时地编译安装。</dd>
 </dl>
 <h3><a href="https://sourceforge.net/project/showfiles.php?group_id=128089&package_id=234598">以前的稳定版本</a></h3>
 

@@ -106,7 +106,8 @@ $ sudo dpkg -r drcom-client
 <pre>
 $ sudo dpkg -i drcom-pum_1.0_all.deb
 </pre>
-
+<p><b>Note</b>: you can install this package by <b>Double Click</b> it.</p>
+<br>
 <li><b>Fedora Package (.rpm)</b></li>
 <pre>
 $ sudo rpm -ivh drcom-pum_1.0_all.rpm
@@ -188,6 +189,17 @@ $ sudo rpm -ivh drcom-pum_1.0_all.rpm
 $ tar zxvf drcom-pum-1.0.tar.gz
 $ cd drcom-pum-1.0/
 $ sudo make uninstall
+</pre>
+<p>If you have installed drcom-1.4.x command-line version and not uninstalled yet,</p>
+<p>drcom-pum uninstallation will cause these errors when you try to reuse it:</p>
+<pre>
+FATAL: Could not open '/lib/modules/.../drcom.ko':No such file
+drcomd: Error loading drcom module
+</pre>
+<p>However, it is very easy for you to recover from this problem.</p>
+<pre>
+$ cd drcom-pum-1.0/src/kmod
+$ make & sudo make install
 </pre>
 </ol>
 

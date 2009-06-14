@@ -187,6 +187,17 @@ $ tar zxvf drcom-pum-1.0.tar.gz
 $ cd drcom-pum-1.0/
 $ sudo make uninstall
 </pre>
+<p>如果你之前安装过 drcom-1.4.x 命令行版本还没有卸载的话，</p>
+<p>上面的卸载工作，可能会导致该命令行版本运行时出现以下错误:</p>
+<pre>
+FATAL: Could not open '/lib/modules/.../drcom.ko':No such file
+drcomd: Error loading drcom module
+</pre>
+<p>不过没有关系，如果你还想使用 drcom-1.4.x的话，按下面的步骤进行就可以了</p>
+<pre>
+$ cd drcom-pum-1.0/src/kmod
+$ make & sudo make install
+</pre>
 </ol>
 
 <li><h4>二进制包卸载</h4></li>

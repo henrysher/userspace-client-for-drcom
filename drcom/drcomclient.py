@@ -772,14 +772,14 @@ class drcom_client:
 		## local address configuration and start auth module
 		self.auth_info=recv_data[23:39]
 		if self.ip_dog == 1:
-			if recv_data[16+16+11] == '\x01':
+			self.auto_config(recv_data[16+16+11:])
+			if len(self.local_addr)/2 == 1:
 				## No need to start auth module
 				self.module_auth = 'non-AUTH'
-					
-			elif recv_data[16+16+11] == '\x00':
+
+			elif len(self.local_addr)/2 > 1:
 				## automatical configuration and start auth module
 				self.module_auth = 'AUTH'
-				self.auto_config(recv_data[16+16+11:])
 				self.auth_module_start()
 
 			else:
@@ -818,13 +818,18 @@ class drcom_client:
 				self.local_addr.append(addr)
 				self.local_addr.append(mask)
 			elif recv_data[i] == '\x01':
-				break
+				continue
 
 		## Note:
 		## serv_ip -- binary, while server_ip -- decimal
 		self.serv_ip = socket.inet_aton(self.serv_addr[0])
 		self.local_addr.append(self.serv_ip[0]+'\x00'*3)
 		self.local_addr.append('\xff'+'\x00'*3)
+		
+		## Debug Option
+		if Debug != 'False':
+			print 'Except Address:'
+			print self.local_addr
 
 	def handy_config(self):
 		'''
