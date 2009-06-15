@@ -1,4 +1,5 @@
-drcom-pum (1.0) unstable; urgency=low
+drcom-pum (1.0-0ubuntu1~ppa4~hardy1) hardy; urgency=low
+
 
   * Initial release.
   * Add friendly Graphical User Interface for esay configuration.

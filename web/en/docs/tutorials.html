@@ -113,6 +113,65 @@ $ sudo dpkg -i drcom-pum_1.0_all.deb
 $ sudo rpm -ivh drcom-pum_1.0_all.rpm
 </pre>
 </ul>
+
+<li><h4> APT-GET Installation </h4></li>
+<p>We <b>strongly recommend</b> you to take this way of installation!</p>
+<br>
+<b>Configuration</b>
+<p>You should add our URLs into your Ubuntu Software Sources.</p>
+<ol>
+<li>Open System -> Administration -> Software Sources</li>
+<li>Find the tag named "Third-Party Software",and Click <b>"Add"</b>, add these two URLs in:
+<p></p>
+<br>
+<p><b>
+deb http://ppa.launchpad.net/drcom-client/ppa/ubuntu/ jaunty main
+</b></p>
+<p><b>
+deb-src http://ppa.launchpad.net/drcom-client/ppa/ubuntu/ jaunty main
+</b></p>
+<br>
+<p>If the version of Ubuntu you used is <b>NOT</b> Jaunty, please replace "jaunty" with "hardy" or "intrepid".</p>
+<br>
+<p>
+<img src="../../images/apt_add.png" />
+</p>
+<br>
+<li>Then <b>reload</b> it, yeah, that's OK.</li>
+<br>
+<p>
+<img src="../../images/apt_reload.png" />
+</p>
+<br>
+<li>You could do the same job in the command-line way.</li>
+<pre>
+$ sudo vim /etc/apt/sources.list
+</pre>
+Add these two URLs above in.
+Then,
+<pre>
+$ sudo apt-get update
+</pre>
+</ol>
+<b>Now we could use APT-GET to install drcom-pum.</b>
+<pre>
+$ sudo apt-get install drcom-pum
+</pre>
+<p>
+So easy ?
+</p>
+<b>Suggestion: import our GPG KEY into your system</b>
+<ol>
+<li>
+Download our GPG KEY file <a href="../../downloads/drcom.key">drcom.key</a>
+</li>
+<li>
+Then find the tag named "Authentication" in "Software Sources",
+and click <b>Import Key File</b>, add <b>drcom.key</b> just downloaded.
+</li>
+</ol>
+<br>
+<img src="../../images/apt_key.png" />
 </ol>
 
 <h3><a name="Run"></a>Run</h3>

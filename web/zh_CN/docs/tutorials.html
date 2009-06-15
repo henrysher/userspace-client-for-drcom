@@ -113,6 +113,65 @@ $ sudo dpkg -i drcom-pum_1.0_all.deb
 $ sudo rpm -ivh drcom-pum_1.0_all.rpm
 </pre>
 </ul>
+
+<li><h4> APT-GET 安装 </h4></li>
+<p>除了直接用 deb包 安装，我们<b>强烈推荐</b> apt-get 的方式，使用这种方式可以很方便地自动升级。</p>
+<br>
+<b>安装前的设置</b>
+<p>将 drcom-client 软件源 加入到你的 Ubuntu的软件源中</p>
+<ol>
+<li>打开 System -> Administration -> Software Sources [系统 -> 管理 -> 软件源]</li>
+<li>找到 Third-Party Software [第三方软件]，点击 <b>"Add"</b>，将下面两个链接分别加入到其中。
+<p></p>
+<br>
+<p><b>
+deb http://ppa.launchpad.net/drcom-client/ppa/ubuntu/ jaunty main
+</b></p>
+<p><b>
+deb-src http://ppa.launchpad.net/drcom-client/ppa/ubuntu/ jaunty main
+</b></p>
+<br>
+<p>如果你所使用的Ubuntu 版本<b>不是</b> Jaunty，可以将 jaunty 替换为 hardy 或者 intrepid</p>
+<br>
+<p>
+<img src="../../images/apt_add.png" />
+</p>
+<br>
+<li>然后 <b>reload</b> 一下，设置就完成了</li>
+<br>
+<p>
+<img src="../../images/apt_reload.png" />
+</p>
+<br>
+<li>你也可以在终端键入命令的方式完成它</li>
+<pre>
+$ sudo vim /etc/apt/sources.list
+</pre>
+将上述两个链接加入到这个文件里面。
+然后，
+<pre>
+$ sudo apt-get update
+</pre>
+</ol>
+<b>下面可以利用 APT-GET 的方式来安装 drcom-pum 了</b>
+<pre>
+$ sudo apt-get install drcom-pum
+</pre>
+<p>
+是不是很简单?
+</p>
+<b>另外给大家一个建议，最好是把我们的 GPG KEY 也导入到你们的系统</b>
+<ol>
+<li>
+下载这个GPG KEY 文件 <a href="../../downloads/drcom.key">drcom.key</a>
+</li>
+<li>
+然后在 Software Sources [软件源] 里面找到 Authentication [认证]，
+点击 Import Key File [导入 KEY 文件]，找到刚才的 drcom.key 文件，点击 "OK" 就可以了。
+</li>
+</ol>
+<br>
+<img src="../../images/apt_key.png" />
 </ol>
 
 <h3><a name="Run"></a>运行</h3>
