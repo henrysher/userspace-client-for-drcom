@@ -1,9 +1,0 @@
-Redirect 301 /wiki http://apps.sourceforge.net/trac/drcom-client/
-ErrorDocument 404 /errors/
-ErrorDocument 403 /errors/
-ErrorDocument 500 /errors/
-
-Options +FollowSymlinks
-RewriteEngine on
-rewritecond %{http_host} ^drcom-client.org [nc]
-rewriterule ^(.*)$ http://www.drcom-client.org/$1 [r=301,nc] 
