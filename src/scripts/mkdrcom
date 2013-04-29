@@ -1,0 +1,57 @@
+#!/bin/sh
+##
+## drcom-client PUM v1.0, Python User Mode
+##
+##               mkdrcom
+## drcom-client module auto-compiling script
+## Copyright (c) 2009, drcom-client Team
+## Author:		Henry Huang <henry.s.huang@gmail.com>
+##
+## This program is free software; you can redistribute it and/or
+## modify it under the terms of the GNU General Public
+## License as published by the Free Software Foundation; either
+## version 2.1 of the License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+## General Public License for more details.
+#
+## You should have received a copy of the GNU General Public
+## License along with this program; if not, write to the
+## Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+## Boston, MA 02111-1307, USA.
+
+MODULE_NAME="drcom"
+INSTALL_DIR="/usr/share/drcom/src/kmod"
+MAKE_DIR="/tmp/$MODULE_NAME"
+LOG="/var/log/$MODULE_NAME-install.log"
+
+mkdir -p $MAKE_DIR
+rm -rf $MAKE_DIR/*
+cp $INSTALL_DIR/* $MAKE_DIR/
+
+echo `date` `uname -r` >> $LOG 2>&1
+echo 'mkdrcom' >> $LOG 2>&1
+echo '----------------------------------' >> $LOG 2>&1
+
+if ! [ -d /lib/modules/`uname -r`/build ]; then
+	echo "You should install kernel headers first."
+	exit 1
+
+else
+	cd $MAKE_DIR
+	make clean
+	echo "Compiling drcom kernel module"
+	echo "Wait for a moment..."
+	if ! make >> $LOG 2>&1; then
+		echo "Compile drcom kernel module failed!"
+		exit 1
+	fi
+	if ! make install >> $LOG 2>&1; then
+		echo "Install drcom kernel module failed!"
+		exit 1
+	fi
+	echo "Install drcom kernel module successfully!"
+fi
+exit 0
